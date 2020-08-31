@@ -10,6 +10,8 @@
 
 //https://www.youtube.com/watch?v=vjf774RKrLc
 
+var PORT = process.env.PORT || 3000; 
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -38,4 +40,4 @@ mongoose.connect(
     () => console.log('Esto demuestra que está conectada la base de datos con el programa.')
 );
 
-app.listen(3000);
+app.listen(PORT);
