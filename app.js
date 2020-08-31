@@ -22,13 +22,16 @@ const postsRoute = require('./routes/posts');
 const homeRoute = require('./routes/home');
 const restRoute = require('./routes/restaurants');
 const ordersRoute = require('./routes/orders');
+const cors = require('cors'); //enable CORS
 // Parsing post requests
-app.use(bodyparser.json())
+app.use(bodyparser.json());
 //Middlewares
 app.use('/posts', postsRoute);
 app.use('/', homeRoute);
 app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);
+
+app.use(cors());
 
 //Rutas
 
