@@ -24,7 +24,7 @@ const restRoute = require('./routes/restaurants');
 const ordersRoute = require('./routes/orders');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
-app.use(bodyparser.json());
+app.use(bodyparser.json())
 //Middlewares
 app.use('/posts', postsRoute);
 app.use('/', homeRoute);
