@@ -16,7 +16,7 @@ router.post('/', async (req,res) => {
     const { CustomerName, OrderDescription, OrderNumber, OrderStatus} = req.body;
     let order = {};
     order.CustomerName = CustomerName;
-    order.OrderDescription = OrderDescritpion;
+    order.OrderDescription = OrderDescription;
     order.OrderNumber = OrderNumber;
     order.OrderStatus = OrderStatus;
 
