@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../models/order');
+const Order = require('../models/order.js');
 
 router.get('/', async (req,res) => {
     try{
@@ -16,7 +16,7 @@ router.post('/', async (req,res) => {
     const { CustomerName, OrderDescription, OrderNumber, OrderStatus} = req.body;
     let order = {};
     order.CustomerName = CustomerName;
-    order.OrderDescription = OrderDescritpion;
+    order.OrderDescription = OrderDescription;
     order.OrderNumber = OrderNumber;
     order.OrderStatus = OrderStatus;
 
