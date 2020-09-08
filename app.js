@@ -19,7 +19,6 @@ const bodyparser =  require('body-parser');
 require('dotenv/config');
 
 
-const postsRoute = require('./routes/posts');
 const homeRoute = require('./routes/home');
 const restRoute = require('./routes/restaurants');
 const ordersRoute = require('./routes/orders');
@@ -30,7 +29,6 @@ app.use(cors());
 //Middlewares
 
 
-app.use('/posts', postsRoute);
 app.use('/', homeRoute);
 app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);

@@ -6,45 +6,58 @@ router.get('/', async (req,res) => {
     try{
         const orders = await Order.find();
         res.send(orders);
-        //res.json(order);
+        res.json(orders);
     }catch(err){
         res.json({ message: err });
     }
 });
 
+// Orders Controller
 router.post('/', async (req,res) => {
-    const { CustomerName, OrderDescription, OrderNumber, OrderStatus} = req.body;
-    let order = {};
-    order.CustomerName = CustomerName;
-    order.OrderDescription = OrderDescription;
-    order.OrderNumber = OrderNumber;
-    order.OrderStatus = OrderStatus;
-
-    let orderModel = new Order(order);
-    await orderModel.save();
-    res.json(orderModel);
-        //const order = new Order({
-           //CutomerName: req.body.CustomerName,
-           //OrderDescription: req.body.OrderDescription,
-           //OrderNumber: req.body.OrderNumber
-        //});
-//    try {
- //       const savedOrder = await post.save()
-  //      res.json(data);
-   // }catch(err){
-    //    res.json({ message: err });
-    //}
-
+    insertOrder(req,res);
+});
+//get specific post
+router.get('/:orderID',(req,res) => {
+    getOrderById(req,res);
 });
 
-//get post
-router.get('/:orderID',async (req,res) => {
+
+// DAO?
+async function insertOrder(req,res) {
+    const order = new Order({
+    customerName: req.body.customerName,
+    orderDescription: req.body.orderDescription,
+    orderNumber: req.body.orderNumber,
+    orderStatus: req.body.orderStatus
+    });
+    try {
+        const savedOrder = await order.save()
+        res.json(savedOrder);
+    }catch(err){
+        res.json({ message: err });
+    }
+}
+
+async function getOrderById(req,res) {
     try {
         const order = await Order.findById(req.params.orderID);
         res.json(order);
     }catch(err){
         res.json({message: err});
         }
+}
+
+router.post('/edit/:orderID', async (req,res) => {
+    try {
+        const orderUpdate = await Order.findOneAndUpdate({
+            _id: req.body._id 
+            },
+            req.body,
+            {new: true});
+        res.json(orderUpdate);
+    }catch(err){
+        res.json({message: err});
+    }
 });
 
 //remove a post
