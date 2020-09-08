@@ -4,7 +4,7 @@ const Order = require('../models/order.js');
 
 router.get('/', async (req,res) => {
     try{
-        const orders = await Order.find();
+        const orders = await Order.find( { orderStatus: 'Pending'} );
         res.send(orders);
         res.json(orders);
     }catch(err){
@@ -21,6 +21,10 @@ router.get('/:orderID',(req,res) => {
     getOrderById(req,res);
 });
 
+router.put('/:orderId', (req,res) => {
+    const orderId = req.params.orderId; 
+    deliverOrder(req,res,orderId);
+});
 
 // DAO?
 async function insertOrder(req,res) {
@@ -45,6 +49,13 @@ async function getOrderById(req,res) {
     }catch(err){
         res.json({message: err});
         }
+}
+
+async function deliverOrder(req,res) {
+    var temporderId = await Order.findById(req.params.orderId);
+    Order.findByIdAndUpdate(temporderId, { orderStatus: 'Delivered' }, () => {
+        res.send("Order Delivered!");
+    });
 }
 
 router.post('/edit/:orderID', async (req,res) => {
