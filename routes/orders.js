@@ -30,9 +30,9 @@ router.put('/:orderId', (req,res) => {
 async function insertOrder(req,res) {
     const order = new Order({
     customerName: req.body.customerName,
+    restaurantId: req.body.restaurantId,
     orderDescription: req.body.orderDescription,
-    orderNumber: req.body.orderNumber,
-    orderStatus: req.body.orderStatus
+    orderNumber: req.body.orderNumber
     });
     try {
         const savedOrder = await order.save()
@@ -52,24 +52,16 @@ async function getOrderById(req,res) {
 }
 
 async function deliverOrder(req,res) {
+    try {
     var temporderId = await Order.findById(req.params.orderId);
     Order.findByIdAndUpdate(temporderId, { orderStatus: 'Delivered' }, () => {
         res.send("Order Delivered!");
     });
+    } catch (err) {
+        res.json({ message: err});
+    }
 }
 
-router.post('/edit/:orderID', async (req,res) => {
-    try {
-        const orderUpdate = await Order.findOneAndUpdate({
-            _id: req.body._id 
-            },
-            req.body,
-            {new: true});
-        res.json(orderUpdate);
-    }catch(err){
-        res.json({message: err});
-    }
-});
 
 //remove a post
 router.delete('/:orderID', async (req,res) => {
