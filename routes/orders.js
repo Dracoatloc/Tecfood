@@ -6,7 +6,6 @@ router.get('/', async (req,res) => {
     try{
         const orders = await Order.find();
         res.send(orders);
-        //res.json(order);
     }catch(err){
         res.json({ message: err });
     }
@@ -23,18 +22,6 @@ router.post('/', async (req,res) => {
     let orderModel = new Order(order);
     await orderModel.save();
     res.json(orderModel);
-        //const order = new Order({
-           //CutomerName: req.body.CustomerName,
-           //OrderDescription: req.body.OrderDescription,
-           //OrderNumber: req.body.OrderNumber
-        //});
-//    try {
- //       const savedOrder = await post.save()
-  //      res.json(data);
-   // }catch(err){
-    //    res.json({ message: err });
-    //}
-
 });
 
 //get post
@@ -56,5 +43,7 @@ router.delete('/:orderID', async (req,res) => {
         res.json({message:err});
     }
 });
+
+
 
 module.exports = router;
