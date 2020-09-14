@@ -9,6 +9,11 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    customerId: {
+        type: String,
+        required: true,
+        get: getCustomerId
+    },
     orderDescription: {
         type: String,
         required: true
@@ -19,8 +24,13 @@ const orderSchema = new mongoose.Schema({
     },
     orderStatus: {
         type: String,
-        required: true
+        default: 'Pending'
     }
-});
+},
+    { collection: 'orders' });
+
+function getCustomerId(order) {
+    return order;
+}
 
 module.exports = mongoose.model('Order', orderSchema);

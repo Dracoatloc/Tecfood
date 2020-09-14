@@ -19,9 +19,9 @@ const bodyparser =  require('body-parser');
 require('dotenv/config');
 
 
-const homeRoute = require('./routes/home');
-const restRoute = require('./routes/restaurants');
-const ordersRoute = require('./routes/orders');
+const homeRoute = require('./controller/home');
+const restRoute = require('./controller/restaurants');
+const ordersRoute = require('./controller/deliveryController');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
