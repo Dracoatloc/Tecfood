@@ -24,7 +24,7 @@ async function insertOrder(customerName, customerId, orderDescription, restauran
 
 async function getPendingOrders() {
     try{ 
-        const orders = await Order.find( { orderStatus: 'Pending'} );
+        const orders = await Order.find( { orderStatus: 'Ready'} );
         return orders;
     }catch(err){
         return err;

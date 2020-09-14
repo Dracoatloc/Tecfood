@@ -15,12 +15,12 @@ router.get('/', async (req,res) => {
 
 // Orders Controller
 router.post('/', async (req,res) => {
-    const response = dm.insertOrder(req.body.customerName,
+    const response = await dm.insertOrder(req.body.customerName,
                                     req.body.customerId,
                                     req.body.orderDescription,
                                     req.body.restaurantId,
-                                    res.body.orderNumber);
-    res.send(await response);
+                                    req.body.orderNumber);
+    res.send(response);
 });
 //get specific post
 router.get('/:orderId',async (req,res) => {
