@@ -22,6 +22,7 @@ require('dotenv/config');
 const homeRoute = require('./controller/home');
 const restRoute = require('./controller/restaurants');
 const ordersRoute = require('./controller/deliveryController');
+const restaurantRoute = require('./controller/itemController');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
@@ -32,6 +33,7 @@ app.use(cors());
 app.use('/', homeRoute);
 app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);
+app.use('/restaurant', restaurantRoute);
 
 //Rutas
 
