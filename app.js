@@ -34,7 +34,6 @@ app.use('/', homeRoute);
 app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);
 app.use('/restaurant', restaurantRoute);
-
 //Rutas
 
 //Conexion a base de datos (véase el archivo .env para establecer conexion por usuario)
