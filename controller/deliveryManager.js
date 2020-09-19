@@ -24,13 +24,44 @@ async function insertOrder(customerName, customerId, orderDescription, restauran
 
 async function getPendingOrders() {
     try{ 
-        const orders = await Order.find( { orderStatus: 'Ready'} );
+        const orders = await Order.find( { orderStatus: 'Pending'} );
         return orders;
     }catch(err){
         return err;
         
     }
 
+}
+
+async function getMissedOrders() {
+    try{ 
+        const orders = await Order.find( { orderStatus: 'Missed'} );
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+
+}
+
+async function getReadyOrders() {
+    try{ 
+        const orders = await Order.find( { orderStatus: 'Ready'} );
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+}
+
+async function getDeliveredOrders() {
+    try{ 
+        const orders = await Order.find( { orderStatus: 'Delivered'} );
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
 }
 
 async function getAllOrders() {
@@ -118,6 +149,9 @@ module.exports = {
     insertOrder,
     getPendingOrders,
     getAllOrders,
+    getDeliveredOrders,
+    getReadyOrders,
+    getMissedOrders,
     getOrderById,
     setCashOrderAsDelivered,
     setOrderAsMissed,

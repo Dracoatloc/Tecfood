@@ -13,6 +13,26 @@ router.get('/', async (req,res) => {
     res.json(await response);
 });
 
+router.get('/pending', async (req,res) => {
+    const response = dm.getPendingOrders();
+    res.json(await response);
+});
+
+router.get('/missed', async (req,res) => {
+    const response = dm.getMissedOrders();
+    res.json(await response);
+});
+
+router.get('/ready', async (req,res) => {
+    const response = dm.getReadyOrders();
+    res.json(await response);
+});
+
+router.get('/delivered', async (req,res) => {
+    const response = dm.getDeliveredOrders();
+    res.json(await response);
+});
+
 // Orders Controller
 router.post('/', async (req,res) => {
     const response = await dm.insertOrder(req.body.customerName,
