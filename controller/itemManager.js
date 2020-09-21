@@ -10,6 +10,24 @@ async function getItem(itemId) {
     }
 }
 
+async function addItem(name, description, price, image, availability, includedSides, restaurantId) {
+    try {
+        const item = new Item({
+        name: name,
+        description: description,
+        price: price,
+        image: image,
+        availability: availability,
+        includedSides: includedSides,
+        restaurantId: restaurantId
+        });
+        const savedItem = await item.save()
+        return 'Item Saved';
+    }catch(err){
+        return err;
+    }
+}
+
 async function updateItem(itemId, itemBody) {
     try {
         // const updateOps = {};
@@ -31,6 +49,15 @@ async function updateItem(itemId, itemBody) {
 
 }
 
+async function updateItemAvailability(itemId, availability) {
+    try {
+        await Item.findByIdAndUpdate(itemId, { availability: availability });
+        return 'Availability Updated';
+    } catch(err) {
+        return err;
+    }
+}
+
 async function getItems() {
     try {
         const items = await Item.find();
@@ -43,6 +70,8 @@ async function getItems() {
 
 module.exports = {
     getItem,
+    addItem,
     updateItem,
-    getItems
+    getItems,
+    updateItemAvailability
 }
