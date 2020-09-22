@@ -25,6 +25,14 @@ const orderSchema = new mongoose.Schema({
     orderStatus: {
         type: String,
         default: 'Pending'
+    },
+    paidOnCheckout: {
+        type: Boolean,
+        required: true
+    },
+    amount: {
+        type: Number,
+        required: true
     }
 },
     { collection: 'orders' });
@@ -32,5 +40,6 @@ const orderSchema = new mongoose.Schema({
 function getCustomerId(order) {
     return order;
 }
+
 
 module.exports = mongoose.model('Order', orderSchema);

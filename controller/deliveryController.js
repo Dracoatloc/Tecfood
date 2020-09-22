@@ -51,6 +51,8 @@ router.get('/:orderId',async (req,res) => {
 router.put('/deliver/:orderId', async (req,res) => {
     const response = dm.setOrderAsDelivered(req.params.orderId);
     res.send(await response);
+
+
 });
 
 // Preferiblemente eliminar, que un boton en especifico pase el orderId
