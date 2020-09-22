@@ -11,12 +11,16 @@
 //https://www.youtube.com/watch?v=vjf774RKrLc
 
 var PORT = process.env.PORT || 3000; 
-
+const sesion = requiere('express-session');
+const passport = require('passport');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyparser =  require('body-parser');
 require('dotenv/config');
+
+//Inicia la verificacion
+require('./controller/passport');
 
 
 const homeRoute = require('./controller/home');
@@ -29,12 +33,27 @@ app.use(bodyparser.json());
 app.use(cors());
 //Middlewares
 
-
+app.use(express.urlencoded({extended: false}));
 app.use('/', homeRoute);
 app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);
 app.use('/restaurant', restaurantRoute);
+
+//Permite autenticar el usuario
+app.use(sesion({
+  secret: 'secreto',
+  resave: true,
+  saveUninitialized: true
+}));
+
+
+app.use(passport.initialize());
+app.use(passport.sesion());
+app.use(flash());
 //Rutas
+app.use(require('./routes/index'));
+app.use(require('./routes/customer'));
+
 
 //Conexion a base de datos (véase el archivo .env para establecer conexion por usuario)
 mongoose.connect(
