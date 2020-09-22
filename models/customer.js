@@ -31,7 +31,7 @@ const customerSchema = new mongoose.Schema({
 });
 
 //Se encripta la contrasenia
-UserSchema.methods.encrypyPassword = async(passsword) => {
+customerSchema.methods.encrypyPassword = async(passsword) => {
     //cifra la contrasenia 
     const salt = await bcrypt.genSalt(10);
     const hash = bcrypt.hash(passsword,salt);
@@ -40,7 +40,7 @@ UserSchema.methods.encrypyPassword = async(passsword) => {
 
 
 //Verifica con lo que tenemos en la base cuando se logee
-UserSchema.methods.matchPassword = async function(passsword){
+customerSchema.methods.matchPassword = async function(passsword){
     return await bcrypt.compare(password, this.passsword);
 
 } 
