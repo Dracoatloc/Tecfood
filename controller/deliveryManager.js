@@ -33,6 +33,37 @@ async function getPendingOrders() {
 
 }
 
+async function getMissedOrders() {
+    try{ 
+        const orders = await Order.find( { orderStatus: 'Missed'} );
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+
+}
+
+async function getReadyOrders() {
+    try{ 
+        const orders = await Order.find( { orderStatus: 'Ready'} );
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+}
+
+async function getDeliveredOrders() {
+    try{ 
+        const orders = await Order.find( { orderStatus: 'Delivered'} );
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+}
+
 async function getAllOrders() {
     try {
         const orders = await Order.find();
@@ -55,6 +86,16 @@ async function getOrderById(orderId) {
 async function setOrderAsDelivered(orderId) {
     try {
         await Order.findByIdAndUpdate(orderId, { orderStatus: 'Delivered' });
+        const order = await Order.findById(orderId);
+
+        if(order.get('paidOnCheckout') == false) {
+            var customerId = order.customerId;
+            var restaurantId = order.restaurantId;
+            var amount = order.amount;
+            registerTransaction(orderId, customerId, restaurantId, amount);
+            return 'Remember to Charge the Customer! xd';
+        }
+        
         console.log('Order Delivered!');
         return 'Order Delivered!';
     } catch (err) {
@@ -62,17 +103,21 @@ async function setOrderAsDelivered(orderId) {
     }
 }
 
-async function setCashOrderAsDelivered(orderId, customerId, restaurantId, amount) {
-    setOrderAsDelivered(orderId);
-    registerTransaction(orderId, customerId, restaurantId, amount);
-}
-
 async function setOrderAsMissed(orderId) {
     // cambiar (req,res) por (orderId) para no necesitar de un http request
     try {
         await Order.findByIdAndUpdate(orderId, { orderStatus: 'Missed' });
+        const order = await Order.findById(orderId);
+
+        if(order.get('paidOnCheckout') == false) {
+            await Customer.findByIdAndUpdate(order.customerId, {canOrder: false}, function() {
+                console.log("User Blocked");
+            }); 
+        }
+
         console.log('Order set as missed');
         return 'Order set as missed';
+
     }catch(err) {
         return err;
     }
@@ -117,10 +162,12 @@ module.exports = {
     setOrderAsDelivered,
     insertOrder,
     getPendingOrders,
+    getMissedOrders,
+    getReadyOrders,
+    getDeliveredOrders,
     getAllOrders,
     getOrderById,
-    setCashOrderAsDelivered,
     setOrderAsMissed,
-    setCashOnDeliveryMissed,
+    //setCashOnDeliveryMissed,
     registerTransaction
 }
