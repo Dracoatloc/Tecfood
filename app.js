@@ -11,7 +11,7 @@
 //https://www.youtube.com/watch?v=vjf774RKrLc
 
 var PORT = process.env.PORT || 3000; 
-const sesion = requiere('express-session');
+const sesion = require('express-session');
 const passport = require('passport');
 const express = require('express');
 const app = express();
@@ -51,7 +51,6 @@ app.use(passport.initialize());
 app.use(passport.sesion());
 app.use(flash());
 //Rutas
-app.use(require('./routes/index'));
 app.use(require('./routes/customer'));
 
 
