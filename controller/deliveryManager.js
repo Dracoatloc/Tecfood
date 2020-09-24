@@ -75,8 +75,8 @@ async function getAllOrders() {
 
 async function getOrderById(orderId) {
     try {
-        const order = await Order.findById(orderId);
-        return order;
+        const orderDetails = await Order.findById(orderId);
+        return orderDetails;
         //res.json(order);
     }catch(err){
         return err;
