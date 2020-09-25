@@ -50,7 +50,7 @@ mongoose.connect(
     process.env.DB2, 
     { useNewUrlParser: true,
       useUnifiedTopology: true }, 
-    () => console.log('Esto demuestra que está conectada la base de datos con el programa.')
+    () => console.log('Esto demuestra que está conectada la base de datos con el programa en puerto: ' + PORT)
 );
 
 app.listen(PORT);
