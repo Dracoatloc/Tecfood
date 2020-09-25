@@ -1,4 +1,4 @@
-//Auntenticacion del usuario que intenta haer Log-in
+//Auntenticacion del usuario que intenta hacer Log-in
 const passport = require('passport');
 const customer = require('../models/customer');
 const localS = require('passport-local').Strategy;

@@ -11,8 +11,7 @@
 //https://www.youtube.com/watch?v=vjf774RKrLc
 
 var PORT = process.env.PORT || 3000; 
-const sesion = require('express-session');
-const passport = require('passport');
+//const passport = require('passport'); esta comentado para luego activarse en log in
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -20,7 +19,7 @@ const bodyparser =  require('body-parser');
 require('dotenv/config');
 
 //Inicia la verificacion
-require('./controller/passport');
+//passport = require('./controller/passport');
 
 
 const homeRoute = require('./controller/home');
@@ -39,20 +38,12 @@ app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);
 app.use('/restaurant', restaurantRoute);
 
-//Permite autenticar el usuario
-app.use(sesion({
-  secret: 'secreto',
-  resave: true,
-  saveUninitialized: true
-}));
 
 
-app.use(passport.initialize());
+/*app.use(passport.initialize());
 app.use(passport.sesion());
 app.use(flash());
-//Rutas
-app.use(require('./routes/customer'));
-
+*/
 
 //Conexion a base de datos (véase el archivo .env para establecer conexion por usuario)
 mongoose.connect(

@@ -1,5 +1,5 @@
 {
-  "name": "proyecto_software",
+  "name": "express-session",
   "version": "1.0.0",
   "description": " ",
   "main": "index.js",
@@ -24,5 +24,13 @@
     "passport-local": "1.0.0",
     "nodemon": "^2.0.4"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AQJMTZ/TecFood.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AQJMTZ/TecFood/issues"
+  },
+  "homepage": "https://github.com/AQJMTZ/TecFood#readme"
 }
