@@ -14,6 +14,7 @@ var PORT = process.env.PORT || 3000;
 //const passport = require('passport'); esta comentado para luego activarse en log in
 const express = require('express');
 const app = express();
+
 const mongoose = require('mongoose');
 const bodyparser =  require('body-parser');
 require('dotenv/config');
@@ -26,6 +27,7 @@ const homeRoute = require('./controller/home');
 const restRoute = require('./controller/restaurants');
 const ordersRoute = require('./controller/deliveryController');
 const restaurantRoute = require('./controller/itemController');
+const Customer = require('./controller/SingupController');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
@@ -37,7 +39,7 @@ app.use('/', homeRoute);
 app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);
 app.use('/restaurant', restaurantRoute);
-
+app.use('/customer', Customer);
 
 
 /*app.use(passport.initialize());
