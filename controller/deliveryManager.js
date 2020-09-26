@@ -166,11 +166,7 @@ module.exports = {
     getReadyOrders,
     getDeliveredOrders,
     getAllOrders,
-    getDeliveredOrders,
-    getReadyOrders,
-    getMissedOrders,
     getOrderById,
     setOrderAsMissed,
-    //setCashOnDeliveryMissed,
     registerTransaction
 }
