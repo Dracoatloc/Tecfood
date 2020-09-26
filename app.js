@@ -19,7 +19,8 @@ const bodyparser =  require('body-parser');
 require('dotenv/config');
 
 
-const homeRoute = require('./controller/home');
+const apiRoute = require('./routes');
+
 const restRoute = require('./controller/restaurants');
 const ordersRoute = require('./controller/deliveryController');
 const restaurantRoute = require('./controller/itemController');
@@ -30,11 +31,11 @@ app.use(cors());
 //Middlewares
 
 
-app.use('/', homeRoute);
-app.use('/restaurants', restRoute);
-app.use('/orders', ordersRoute);
-app.use('/restaurant', restaurantRoute);
 //Rutas
+app.use('/api', apiRoute);
+//app.use('/restaurants', restRoute);
+//app.use('/orders', ordersRoute);
+//app.use('/restaurant', restaurantRoute);
 
 //Conexion a base de datos (véase el archivo .env para establecer conexion por usuario)
 mongoose.connect(
