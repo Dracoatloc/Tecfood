@@ -14,22 +14,26 @@ router.post("/signup",(req, res, next)=>{
     Customer.find({email: req.body.email})
     .exec()
     .then(customer =>{
+        //If the email already exists
         if (customer.length >= 1){
             return res.status(409).json({
                 message: 'Mail already exists'
             });
         }else {
+            //Crypts the password on the DB
             bcrypt.hash(req.body.password, 10, (err, hash)=> {
                 if(err){
                     return res.status(500).json({
                         error: err
                     });
                 }else {
+                    //Creates a new Customer
                     const customer = new Customer({
                         email: req.body.email,
                         password: hash, 
                         Name: req.body.name
                     });
+                    //adds the customer if the customer is creaed correctly
                     customer
                     .save()
                     .then(result => {
@@ -54,6 +58,7 @@ router.post("/signup",(req, res, next)=>{
     
 });    
 
+//To delete a customer
 router.delete('/customerId', (req, res, next)=>{
     customer.remove({_id: req.params.customer._id})
     .exec()
