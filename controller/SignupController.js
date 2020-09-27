@@ -42,6 +42,7 @@ router.post("/signup",(req, res, next)=>{
                             message: 'You have createad an account'
                         });
                     })
+                    
                     .catch(err => {
                         console.log(err);
                         res.status(500).json({
