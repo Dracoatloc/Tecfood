@@ -27,7 +27,7 @@ const homeRoute = require('./controller/home');
 const restRoute = require('./controller/restaurants');
 const ordersRoute = require('./controller/deliveryController');
 const restaurantRoute = require('./controller/itemController');
-const Customer = require('./controller/SingupController');
+const CustomerRoute = require('./controller/SignupController');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
@@ -39,7 +39,7 @@ app.use('/', homeRoute);
 app.use('/restaurants', restRoute);
 app.use('/orders', ordersRoute);
 app.use('/restaurant', restaurantRoute);
-app.use('/customer', Customer);
+app.use('/customer', CustomerRoute);
 
 
 /*app.use(passport.initialize());
