@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Item = require('../models/item');
-const im = require('./itemManager');
+const im = require('../manager/itemManager');
 
 async function getItem(req,res) {
     const response = im.getItem(req.params.itemId);

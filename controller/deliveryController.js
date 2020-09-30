@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const dm = require('./deliveryManager');
+const dm = require('../manager/deliveryManager');
 
 async function getAllOrders(req,res) {
     const response = dm.getAllOrders();
