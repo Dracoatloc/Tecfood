@@ -1,9 +1,10 @@
 const express = require('express');
 const Item = require('../models/item'); 
+const itemDAO = require('../DAO/itemDAO');
 
 async function getItem(itemId) {
     try {
-        const item = await Item.findById(itemId);
+        const item = itemDAO.getItem(itemId);
         return item;
     } catch (err) {
         return err;
@@ -12,17 +13,8 @@ async function getItem(itemId) {
 
 async function addItem(name, description, price, image, availability, includedSides, restaurantId) {
     try {
-        const item = new Item({
-        name: name,
-        description: description,
-        price: price,
-        image: image,
-        availability: availability,
-        includedSides: includedSides,
-        restaurantId: restaurantId
-        });
-        const savedItem = await item.save()
-        return 'Item Saved';
+        const success = itemDAO.addItem(name, description, price, image, availability, includedSides, restaurantId);
+        return success;
     }catch(err){
         return err;
     }
@@ -30,19 +22,8 @@ async function addItem(name, description, price, image, availability, includedSi
 
 async function updateItem(itemId, itemBody) {
     try {
-        // const updateOps = {};
-        // for(const op of itemBody){
-            //updateOPs[ops.propname] = ops.value;
-            //}
-        // en Update: { $set: updateOps } 
-        await Item.findByIdAndUpdate(itemId, { $set: { 
-                                             name: itemBody.name,
-                                             description: itemBody.description,
-                                             price: itemBody.price,
-                                             image: itemBody.image,
-                                             availability: itemBody.availability,
-                                             includedSides: itemBody.includedSides }});
-        return 'Item Updated'
+        const success = itemDAO.updateItem(itemId, itemBody);
+        return success;
     } catch(err) {
         return err;
     }
@@ -51,8 +32,8 @@ async function updateItem(itemId, itemBody) {
 
 async function updateItemAvailability(itemId, availability) {
     try {
-        await Item.findByIdAndUpdate(itemId, { availability: availability });
-        return 'Availability Updated';
+        const success = itemDAO.updateItemAvailability(itemId, availability);
+        return success;
     } catch(err) {
         return err;
     }
@@ -60,7 +41,7 @@ async function updateItemAvailability(itemId, availability) {
 
 async function getItems() {
     try {
-        const items = await Item.find();
+        const items = itemDAO.getItems();
         return items;
     } catch(err){
         return err;
