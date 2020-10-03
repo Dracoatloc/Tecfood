@@ -1,19 +1,19 @@
 const router = require('express').Router();
 
-const deliveryController = require('./controller/deliveryController');
+const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 
-router.get('/orders', deliveryController.getAllOrders);
-router.get('/orders/pending', deliveryController.getPendingOrders);
-router.get('/orders/missed', deliveryController.getMissedOrders);
-router.get('/orders/ready', deliveryController.getReadyOrders);
-router.get('/orders/delivered', deliveryController.getDeliveredOrders);
-router.get('/orders/:orderId', deliveryController.getOrderById);
+router.get('/orders', orderController.getAllOrders);
+router.get('/orders/pending', orderController.getPendingOrders);
+router.get('/orders/missed', orderController.getMissedOrders);
+router.get('/orders/ready', orderController.getReadyOrders);
+router.get('/orders/delivered', orderController.getDeliveredOrders);
+router.get('/orders/:orderId', orderController.getOrderById);
 
-router.put('/orders/deliver/:orderId', deliveryController.setOrderAsDelivered);
-router.put('/orders/missed/:orderId', deliveryController.setOrderAsMissed);
+router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
+router.put('/orders/missed/:orderId', orderController.setOrderAsMissed);
 
-router.post('/orders', deliveryController.insertOrder);
+router.post('/orders', orderController.insertOrder);
 ////
 
 router.get('/restaurant/:restaurantId/item/:itemId', itemController.getItem);

@@ -1,8 +1,6 @@
-const Trans = require('../models/transaction');
 const orderDAO = require('../DAO/orderDAO');
 const transDAO = require('../DAO/transactionDAO');
-//const mongoose = require('mongoose');
-//const DAO = require('./orderDAO');
+const customerDAO = require('../DAO/customerDAO');
 
 
 async function insertOrder(customerName, customerId, orderDescription, restaurantId, orderNumber) {
@@ -87,8 +85,12 @@ async function setOrderAsDelivered(orderId) {
 async function setOrderAsMissed(orderId) {
     // cambiar (req,res) por (orderId) para no necesitar de un http request
     try {
-        const message = await orderDAO.setOrderAsMissed(orderId);
-        return message;
+        const order = await orderDAO.setOrderAsMissed(orderId);
+        if(order.get('paidOnCheckout') == false) {
+            const message = customerDAO.blockUser(order.customerId);
+            return message;
+        }
+        return 'Order Missed';
 
     }catch(err) {
         return err;

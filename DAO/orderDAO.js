@@ -52,7 +52,7 @@ async function setOrderAsDelivered(orderId) {
         var customerId = order.customerId;
         var restaurantId = order.restaurantId;
         var amount = order.amount;
-        registerTransaction(orderId, customerId, restaurantId, amount);
+        Trans.registerTransaction(orderId, customerId, restaurantId, amount);
         return 'Remember to Charge the Customer! ';
     }
     return 'Order Delivered!';
@@ -61,14 +61,7 @@ async function setOrderAsDelivered(orderId) {
 async function setOrderAsMissed(orderId) {
     await Order.findByIdAndUpdate(orderId, { orderStatus: 'Missed' });
     const order = await Order.findById(orderId);
-
-    if(order.get('paidOnCheckout') == false) {
-        await Customer.findByIdAndUpdate(order.customerId, {canOrder: false}, function() {
-            console.log("User Blocked");
-        }); 
-        return 'User Blocked';
-    }
-    return 'Order set as missed';
+    return order
 }
 
 async function setCashOnDeliveryMissed(orderId) {
