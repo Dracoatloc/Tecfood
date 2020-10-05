@@ -24,8 +24,12 @@ const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
 app.use(cors());
-//Middlewares
 
+//Middlewares
+const CustomerLog = require("./controller/LogInController");
+
+
+app.use('/customer', CustomerLog);
 
 //Rutas
 app.use('/api', apiRoute);
