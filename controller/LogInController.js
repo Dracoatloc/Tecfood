@@ -1,7 +1,9 @@
+//Here we import all we need in order to function our bussiness logic
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 //Bring in the Customer model
 let Customer = require("../models/customer");
@@ -23,12 +25,22 @@ router.post("/login", (req, res, next) => {
         bcrypt.compare(req.body.password, customer[0].password, (err, result)=>{
             if (err){
                 return res.status(401).json({
-                    message: 'Authentication Failed: wrong password'
+                    message: 'Authentication Failed'
                 });
             }
             if(result){
+                const token = jwt.sign({
+                    email: customer[0],
+                    customerId: customer[0]._id
+
+                }, process.env.JWT_KEY,
+                {
+                    expiresIn: "1h"
+                },
+                );
                 return res.status(200).json({
-                    message:'Authentiication passed'
+                    message:'Authentiication passed',
+                    token: token
                 });
 
             }
