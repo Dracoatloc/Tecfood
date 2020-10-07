@@ -9,10 +9,10 @@ router.get('/orders/pending', orderController.getPendingOrders);
 router.get('/orders/missed', orderController.getMissedOrders);
 router.get('/orders/ready', orderController.getReadyOrders);
 router.get('/orders/delivered', orderController.getDeliveredOrders);
-router.get('/orders/:orderId', orderController.getOrderById);
+router.get('/orders/:orderNo', orderController.getOrderByNumber);
 
-router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
-router.put('/orders/missed/:orderId', orderController.setOrderAsMissed);
+router.put('/orders/deliver/:orderNo', orderController.setOrderAsDelivered);
+router.put('/orders/missed/:orderNo', orderController.setOrderAsMissed);
 
 router.post('/orders', orderController.insertOrder);
 ////

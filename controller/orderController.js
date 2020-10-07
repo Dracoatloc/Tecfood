@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const mongoose = require('mongoose');
 const om = require('../manager/orderManager');
 
 async function getAllOrders(req,res) {
@@ -27,9 +26,14 @@ async function getDeliveredOrders(req,res) {
     res.json(await response);
 }
 
-async function getOrderById(req,res){
-    const response = om.getOrderById(req.params.orderId);
-    res.json(await response);
+async function getOrderByNumber(req,res){
+    const response = await om.getOrderByNumber(req.params.orderNo);
+    if (response.length == 0) {
+        res.sendStatus(404);
+    }
+    else {
+        res.json(await response);
+    }
 }
 
 async function setOrderAsDelivered(req,res) {
@@ -57,7 +61,7 @@ module.exports = {
     getMissedOrders,
     getReadyOrders,
     getDeliveredOrders,
-    getOrderById,
+    getOrderByNumber,
     setOrderAsDelivered,
     setOrderAsMissed,
     insertOrder

@@ -39,9 +39,13 @@ async function getAllOrders() {
     return orders;
 }
 
-async function getOrderById(orderId) {
-    const order = await Order.findById(orderId);
-    return order;
+async function getOrderByNumber(orderNo) {
+    try {
+        const order = await Order.find({ orderNumber : orderNo });
+        return order;
+    } catch(err) {
+        return err;
+    }
 }
 
 async function setOrderAsDelivered(orderId) {
@@ -81,7 +85,7 @@ module.exports = {
     getReadyOrders,
     getDeliveredOrders,
     getAllOrders,
-    getOrderById,
+    getOrderByNumber,
     setOrderAsDelivered,
     setOrderAsMissed,
     setCashOnDeliveryMissed

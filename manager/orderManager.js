@@ -63,11 +63,10 @@ async function getAllOrders() {
     }
 }
 
-async function getOrderById(orderId) {
+async function getOrderByNumber(orderNo) {
     try {
-        const order = await orderDAO.getOrderById(orderId);
+        const order = await orderDAO.getOrderByNumber(orderNo);
         return order;
-        //res.json(order);
     }catch(err){
         return err;
     }
@@ -83,7 +82,6 @@ async function setOrderAsDelivered(orderId) {
 }
 
 async function setOrderAsMissed(orderId) {
-    // cambiar (req,res) por (orderId) para no necesitar de un http request
     try {
         const order = await orderDAO.setOrderAsMissed(orderId);
         if(order.get('paidOnCheckout') == false) {
@@ -98,7 +96,6 @@ async function setOrderAsMissed(orderId) {
 }
 
 async function setCashOnDeliveryMissed(orderId) {
-    // ir a bloquear al usuario que pidio y no pago
     try {
         const message = await orderDAO.setCashOnDeliveryMissed(orderId);
         return message;
@@ -108,7 +105,6 @@ async function setCashOnDeliveryMissed(orderId) {
 }
 
 async function registerTransaction(orderId, customerId, restaurantId, amount) {
-    // Registrar la transaccion de cuando pagan en efectivo despues de pasar por la comida
     try {
         const message = await transDAO.registerTransaction(orderId,customerId,restaurantId,amount);
         return message;
@@ -127,7 +123,7 @@ module.exports = {
     getReadyOrders,
     getDeliveredOrders,
     getAllOrders,
-    getOrderById,
+    getOrderByNumber,
     setOrderAsMissed,
     registerTransaction
 }
