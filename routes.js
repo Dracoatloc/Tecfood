@@ -3,8 +3,8 @@ const router = require('express').Router();
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
-const Menuroute = require("./controller/menuController");
-const itemRoute = require("./controller/itemController");
+const menuController = require("./controller/menuController");
+const { route } = require('./controller/itemController');
 
 
 router.get('/orders', orderController.getAllOrders);
@@ -13,6 +13,9 @@ router.get('/orders/missed', orderController.getMissedOrders);
 router.get('/orders/ready', orderController.getReadyOrders);
 router.get('/orders/delivered', orderController.getDeliveredOrders);
 router.get('/orders/:orderId', orderController.getOrderById);
+
+router.get('/Menu', menuController.getItem);
+router.get('/Menu/items', menuController.getItems);
 
 router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
 router.put('/orders/missed/:orderId', orderController.setOrderAsMissed);
@@ -26,6 +29,11 @@ router.get('/restaurant/:restaurantId/item', itemController.getItems);
 router.put('/restaurant/:restaurantId/item/:itemId', itemController.updateItem);
 router.put('/restaurant/:restaurantId/item/disable/:itemId', itemController.disableItem);
 router.put('/restaurant/:restaurantId/item/enable/:itemId', itemController.enableItem);
+
+
+router.put('/Menu/updateItem', Menuroute.updateItem);
+router.put('/Menu/:restaurantId/item/enable/:itemId', menuController.enableItem);
+router.put('/Menu/:restaurantId/item/disable/:itemId', menuController.disableItem);
 
 router.post('/restaurant/:restaurantId/item', itemController.addItem);
 ////

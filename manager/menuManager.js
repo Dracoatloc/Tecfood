@@ -1,4 +1,3 @@
-const express = require('express');
 const menuDAO = require('../DAO/menuDAO');
 
 async function getItem(itemId) {
@@ -10,9 +9,9 @@ async function getItem(itemId) {
     }
 }
 
-async function addItem(name, description, price, image, availability, includedSides, restaurantId) {
+async function addItem(name, description, price, image, availability, includedSides, restaurantId, restauranName) {
     try {
-        const success = await menuDAO.addItem(name, description, price, image, availability, includedSides, restaurantId);
+        const success = await menuDAO.addItem(name, description, price, image, availability, includedSides, restaurantId, restauranName);
         return success;
     }catch(err){
         return err;
