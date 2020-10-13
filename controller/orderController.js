@@ -1,49 +1,53 @@
-const express = require('express');
-const router = express.Router();
-const dm = require('../manager/deliveryManager');
+const mongoose = require('mongoose');
+const om = require('../manager/orderManager');
 
 async function getAllOrders(req,res) {
-    const response = dm.getAllOrders();
+    const response = om.getAllOrders();
     res.json(await response);
 }
 
 async function getPendingOrders(req,res) {
-    const response = dm.getPendingOrders();
+    const response = om.getPendingOrders();
     res.json(await response);
 }
 
 async function getMissedOrders(req,res) {
-    const response = dm.getMissedOrders();
+    const response = om.getMissedOrders();
     res.json(await response);
 }
 
 async function getReadyOrders(req,res) {
-    const response = dm.getReadyOrders();
+    const response = om.getReadyOrders();
     res.json(await response);
 }
 
 async function getDeliveredOrders(req,res) {
-    const response = dm.getDeliveredOrders();
+    const response = om.getDeliveredOrders();
     res.json(await response);
 }
 
-async function getOrderById(req,res){
-    const response = dm.getOrderById(req.params.orderId);
-    res.json(await response);
+async function getOrderByNumber(req,res){
+    const response = await om.getOrderByNumber(req.params.orderNo);
+    if (response.length == 0) {
+        res.sendStatus(404);
+    }
+    else {
+        res.json(await response);
+    }
 }
 
 async function setOrderAsDelivered(req,res) {
-    const response = dm.setOrderAsDelivered(req.params.orderId);
+    const response = om.setOrderAsDelivered(req.params.orderId);
     res.send(await response);
 }
 
 async function setOrderAsMissed(req,res) {
-    const response = dm.setOrderAsMissed(req.params.orderId);
+    const response = om.setOrderAsMissed(req.params.orderId);
     res.send(await response);
 }
 
 async function insertOrder(req,res) {
-    const response = await dm.insertOrder(req.body.customerName,
+    const response = await om.insertOrder(req.body.customerName,
                                     req.body.customerId,
                                     req.body.orderDescription,
                                     req.body.restaurantId,
@@ -57,7 +61,7 @@ module.exports = {
     getMissedOrders,
     getReadyOrders,
     getDeliveredOrders,
-    getOrderById,
+    getOrderByNumber,
     setOrderAsDelivered,
     setOrderAsMissed,
     insertOrder

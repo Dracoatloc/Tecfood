@@ -1,7 +1,12 @@
 const { model } = require('../models/customer');
 const customer = require('../models/customer');
 
-
+ async function blockUser(customerId) {
+        await Customer.findByIdAndUpdate(customerId, {canOrder: false}, function() {
+            console.log("User Blocked");
+        }); 
+        return 'User Blocked';
+ }
 async function getCustomerEmail(email){
     //Holds it in a new variable to return it
     const Email = customer.findOne(email);
@@ -38,5 +43,7 @@ model.exports ={
     getCustomerEmail,
     getCustomerPassword,
     getCustomerId,
-    addCustomer
+    addCustomer,
+    blockUser
 }
+ 

@@ -13,6 +13,10 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    availability: {
+        type: Boolean,
+        default: true
+    },
     restManagerName: {
         type: String,
         required: true

@@ -27,7 +27,7 @@ async function updateItem(itemId, itemBody) {
                                              image: itemBody.image,
                                              availability: itemBody.availability,
                                              includedSides: itemBody.includedSides }});
-        return 'Item Updated'
+        return 'Item Updated';
 }
 
 async function updateItemAvailability(itemId, availability) {
