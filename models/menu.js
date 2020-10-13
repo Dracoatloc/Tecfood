@@ -10,7 +10,11 @@ const Menu = new mongoose.Schema({
         type: String,
         require: true
     },
-    items: {
+    restauranName: {
+        type: String,
+        require:true
+    },
+    products: {
         type: [String],
         require: []
     },

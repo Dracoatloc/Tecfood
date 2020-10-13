@@ -3,6 +3,9 @@ const router = require('express').Router();
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
+const Menuroute = require("./controller/menuController");
+const itemRoute = require("./controller/itemController");
+
 
 router.get('/orders', orderController.getAllOrders);
 router.get('/orders/pending', orderController.getPendingOrders);

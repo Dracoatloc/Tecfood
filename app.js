@@ -21,10 +21,13 @@ require('dotenv/config');
 
 const apiRoute = require('./routes');
 const cors = require('cors'); //enable CORS
+
 // Parsing post requests
 app.use(bodyparser.json());
 app.use(cors());
+
 //Middlewares
+
 
 
 //Rutas
