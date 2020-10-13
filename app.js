@@ -23,29 +23,21 @@ require('dotenv/config');
 //passport = require('./controller/passport');
 
 
-const homeRoute = require('./controller/home');
-const restRoute = require('./controller/restaurants');
-const ordersRoute = require('./controller/deliveryController');
-const restaurantRoute = require('./controller/itemController');
+
 const CustomerRoute = require('./controller/SignupController');
+const apiRoute = require('./routes');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
 app.use(cors());
 //Middlewares
-
-app.use(express.urlencoded({extended: false}));
-app.use('/', homeRoute);
-app.use('/restaurants', restRoute);
-app.use('/orders', ordersRoute);
-app.use('/restaurant', restaurantRoute);
 app.use('/customer', CustomerRoute);
 
 
-/*app.use(passport.initialize());
-app.use(passport.sesion());
-app.use(flash());
-*/
+
+
+//Rutas
+app.use('/api', apiRoute);
 
 //Conexion a base de datos (véase el archivo .env para establecer conexion por usuario)
 mongoose.connect(
