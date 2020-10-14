@@ -16,25 +16,32 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyparser =  require('body-parser');
+const morgan = require('morgan');
 require('dotenv/config');
 
-
-const apiRoute = require('./routes');
 const cors = require('cors'); //enable CORS
 
 // Parsing post requests
-app.use(bodyparser.json());
-app.use(cors());
+
 
 //Middlewares
+app.use(morgan('dev'));
+app.use(bodyparser.json());
+app.use(cors());
+//app.use(cors({origin: 'http://tec-food-web.herokuapp.com/'}));
 
+//Routing
+const api = express.Router();
+var Restaurant = require ("./routes/restaurantRoutes");
+var Order = require("./routes/ordersRoutes");
+var Menu = require("./routes/menuRoutes");
 
-
-//Rutas
-app.use('/api', apiRoute);
-//app.use('/restaurants', restRoute);
-//app.use('/orders', ordersRoute);
-//app.use('/restaurant', restaurantRoute);
+//prepend '/api' for functioning routes
+app.use('/api', api); 
+// Routes
+api.use('/restaurant', Restaurant);
+api.use('/orders', Order);
+api.use('/menu', Menu);
 
 //Conexion a base de datos (véase el archivo .env para establecer conexion por usuario)
 mongoose.connect(
