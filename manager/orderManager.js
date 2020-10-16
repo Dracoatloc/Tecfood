@@ -15,6 +15,18 @@ async function insertOrder(customerName, customerId, orderDescription, restauran
 async function getPendingOrders() {
     try{ 
         const orders = await orderDAO.getPendingOrders();
+        console.log(orders);
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+
+}
+
+async function getPendingOrdersByRestaurant(restaurantId) {
+    try{ 
+        const orders = await orderDAO.getPendingOrdersByRestaurant(restaurantId);
         return orders;
     }catch(err){
         return err;
@@ -34,9 +46,30 @@ async function getMissedOrders() {
 
 }
 
+async function getMissedOrdersByRestaurant(restaurantId) {
+    try{ 
+        const orders = await orderDAO.getMissedOrdersByRestaurant(restaurantId);
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+
+}
+
 async function getReadyOrders() {
     try{ 
         const orders = await orderDAO.getReadyOrders();
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+}
+
+async function getReadyOrdersByRestaurant(restaurantId) {
+    try{ 
+        const orders = await orderDAO.getReadyOrdersByRestaurant(restaurantId);
         return orders;
     }catch(err){
         return err;
@@ -54,6 +87,16 @@ async function getDeliveredOrders() {
     }
 }
 
+async function getDeliveredOrdersByRestaurant(restaurantId) {
+    try{ 
+        const orders = await orderDAO.getDeliveredOrdersByRestaurant(restaurantId);
+        return orders;
+    }catch(err){
+        return err;
+        
+    }
+}
+
 async function getAllOrders() {
     try {
         const orders = await orderDAO.getAllOrders();
@@ -63,9 +106,63 @@ async function getAllOrders() {
     }
 }
 
+async function getAllOrdersByRestaurant(restaurantId) {
+    try {
+        const orders = await orderDAO.getAllOrdersByRestaurant(restaurantId);
+        return orders;
+    } catch(err) {
+        return err;
+    }
+}
+
+async function getOrdersInProgress() {
+    try {
+        const orders = await orderDAO.getOrdersInProgress();
+        return orders;
+    } catch(err) {
+        return err;
+    }
+}
+
+async function getOrdersInProgressByRestaurant(restaurantId) {
+    try {
+        const orders = await orderDAO.getOrdersInProgressByRestaurant(restaurantId);
+        return orders;
+    } catch(err) {
+        return err;
+    }
+}
+
+async function getCancelledOrders() {
+    try {
+        const orders = await orderDAO.getCancelledOrders();
+        return orders;
+    } catch(err) {
+        return err;
+    }
+}
+
+async function getCancelledOrdersByRestaurant(restaurantId) {
+    try {
+        const orders = await orderDAO.getCancelledOrdersByRestaurant(restaurantId);
+        return orders;
+    } catch(err) {
+        return err;
+    }
+}
+
 async function getOrderByNumber(orderNo) {
     try {
         const order = await orderDAO.getOrderByNumber(orderNo);
+        return order;
+    }catch(err){
+        return err;
+    }
+}
+
+async function getOrderByNumberByRestaurant(orderNo, restaurantId) {
+    try {
+        const order = await orderDAO.getOrderByNumber(orderNo, restaurantId);
         return order;
     }catch(err){
         return err;
@@ -95,12 +192,21 @@ async function setOrderAsMissed(orderId) {
     }
 }
 
-async function setCashOnDeliveryMissed(orderId) {
+async function setOrderAsInProgress(orderId) {
     try {
-        const message = await orderDAO.setCashOnDeliveryMissed(orderId);
+        const message = await orderDAO.setOrderAsInProgress(orderId); 
         return message;
-    } catch(err) {
-        console.log(err);
+    } catch (err) {
+        return err;
+    }
+}
+
+async function setOrderAsCancelled(orderId) {
+    try {
+        const message = await orderDAO.setOrderAsCancelled(orderId); 
+        return message;
+    } catch (err) {
+        return err;
     }
 }
 
@@ -116,14 +222,26 @@ async function registerTransaction(orderId, customerId, restaurantId, amount) {
 
 
 module.exports = { 
-    setOrderAsDelivered,
     insertOrder,
     getPendingOrders,
+    getPendingOrdersByRestaurant,
     getMissedOrders,
+    getMissedOrdersByRestaurant,
     getReadyOrders,
+    getReadyOrdersByRestaurant,
     getDeliveredOrders,
+    getDeliveredOrdersByRestaurant,
     getAllOrders,
+    getAllOrdersByRestaurant,
     getOrderByNumber,
+    getOrderByNumberByRestaurant,
+    getOrdersInProgress,
+    getOrdersInProgressByRestaurant,
+    getCancelledOrders,
+    getCancelledOrdersByRestaurant,
     setOrderAsMissed,
+    setOrderAsDelivered,
+    setOrderAsInProgress,
+    setOrderAsCancelled,
     registerTransaction
 }

@@ -7,3 +7,7 @@ const Customer = require('../models/customer');
         return 'User Blocked';
  }
 
+module.exports = {
+    blockUser
+}
+

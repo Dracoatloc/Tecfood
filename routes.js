@@ -5,14 +5,33 @@ const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
 
 router.get('/orders', orderController.getAllOrders);
-router.get('/orders/pending', orderController.getPendingOrders);
-router.get('/orders/missed', orderController.getMissedOrders);
-router.get('/orders/ready', orderController.getReadyOrders);
-router.get('/orders/delivered', orderController.getDeliveredOrders);
-router.get('/orders/:orderNo', orderController.getOrderByNumber);
+router.get('/orders/:restaurantId', orderController.getAllOrdersByRestaurant);
 
-router.put('/orders/deliver/:orderNo', orderController.setOrderAsDelivered);
-router.put('/orders/missed/:orderNo', orderController.setOrderAsMissed);
+router.get('/orders/pending', orderController.getPendingOrders);
+router.get('/orders/pending/:restaurantId', orderController.getPendingOrdersByRestaurant);
+
+router.get('/orders/missed', orderController.getMissedOrders);
+router.get('/orders/missed/:restaurantId', orderController.getMissedOrdersByRestaurant);
+
+router.get('/orders/ready', orderController.getReadyOrders);
+router.get('/orders/ready/:restaurantId', orderController.getReadyOrdersByRestaurant);
+
+router.get('/orders/delivered', orderController.getDeliveredOrders);
+router.get('/orders/delivered/:restaurantId', orderController.getDeliveredOrdersByRestaurant);
+
+router.get('/orders/:orderNo', orderController.getOrderByNumber);
+router.get('/orders/:restaurantId/:orderNo', orderController.getOrderByNumberByRestaurant);
+
+router.get('/orders/inprogress', orderController.getOrdersInProgress);
+router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
+
+router.get('/orders/cancelled', orderController.getCancelledOrders);
+router.get('/orders/cancelled/:restaurantId', orderController.getCancelledOrdersByRestaurant);
+
+router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
+router.put('/orders/missed/:orderId', orderController.setOrderAsMissed);
+router.put('/orders/start/:orderId', orderController.setOrderAsInProgress);
+router.put('/orders/cancel/:orderId', orderController.setOrderAsCancelled);
 
 router.post('/orders', orderController.insertOrder);
 ////
