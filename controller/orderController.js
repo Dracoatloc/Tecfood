@@ -12,6 +12,7 @@ async function getAllOrdersByRestaurant(req,res) {
 }
 
 async function getPendingOrders(req,res) {
+    console.log('algo');
     const response = await om.getPendingOrders();
     console.log(response);
     res.json(await response);
@@ -79,6 +80,7 @@ async function getOrdersInProgress(req,res) {
 
 async function getOrdersInProgressByRestaurant(req,res) {
     const response = await om.getOrdersInProgressByRestaurant(req.params.restaurantId);
+    //const response = 'hola';
     res.json(await response);
 }
 

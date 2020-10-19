@@ -1,8 +1,13 @@
-const router = require('express').Router();
+router = require('express').Router();
 
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
+
+router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
+
+router.get('/orders/cancelled', orderController.getCancelledOrders);
+router.get('/orders/cancelled/:restaurantId', orderController.getCancelledOrdersByRestaurant);
 
 router.get('/orders', orderController.getAllOrders);
 router.get('/orders/:restaurantId', orderController.getAllOrdersByRestaurant);
@@ -21,12 +26,6 @@ router.get('/orders/delivered/:restaurantId', orderController.getDeliveredOrders
 
 router.get('/orders/:orderNo', orderController.getOrderByNumber);
 router.get('/orders/:restaurantId/:orderNo', orderController.getOrderByNumberByRestaurant);
-
-router.get('/orders/inprogress', orderController.getOrdersInProgress);
-router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
-
-router.get('/orders/cancelled', orderController.getCancelledOrders);
-router.get('/orders/cancelled/:restaurantId', orderController.getCancelledOrdersByRestaurant);
 
 router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
 router.put('/orders/missed/:orderId', orderController.setOrderAsMissed);

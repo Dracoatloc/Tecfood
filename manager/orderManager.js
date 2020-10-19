@@ -194,8 +194,8 @@ async function setOrderAsMissed(orderId) {
 
 async function setOrderAsInProgress(orderId) {
     try {
-        const message = await orderDAO.setOrderAsInProgress(orderId); 
-        return message;
+        const order = await orderDAO.setOrderAsInProgress(orderId); 
+        return 'Order Now in Progress';
     } catch (err) {
         return err;
     }
@@ -203,8 +203,8 @@ async function setOrderAsInProgress(orderId) {
 
 async function setOrderAsCancelled(orderId) {
     try {
-        const message = await orderDAO.setOrderAsCancelled(orderId); 
-        return message;
+        const order = await orderDAO.setOrderAsCancelled(orderId); 
+        return 'Order Cancelled';
     } catch (err) {
         return err;
     }
