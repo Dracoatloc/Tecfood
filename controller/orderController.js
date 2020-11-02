@@ -12,9 +12,7 @@ async function getAllOrdersByRestaurant(req,res) {
 }
 
 async function getPendingOrders(req,res) {
-    console.log('algo');
     const response = await om.getPendingOrders();
-    console.log(response);
     res.json(await response);
 }
 
@@ -110,8 +108,9 @@ async function setOrderAsInProgress(req,res) {
 }
 
 async function setOrderAsCancelled(req,res) {
-    const response = await om.setOrderAsCancelled(req.params.orderId);
-    res.send(await response);
+    const message = req.body;
+    const response = await om.setOrderAsCancelled(req.params.orderId, message);
+   res.send(await response);
 }
 
 async function insertOrder(req,res) {

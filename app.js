@@ -23,15 +23,13 @@ const apiRoute = require('./routes');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
+app.use(bodyparser.text());
 app.use(cors());
 //Middlewares
 
 
 //Rutas
 app.use('/api', apiRoute);
-//app.use('/restaurants', restRoute);
-//app.use('/orders', ordersRoute);
-//app.use('/restaurant', restaurantRoute);
 
 //Conexion a base de datos (véase el archivo .env para establecer conexion por usuario)
 mongoose.connect(

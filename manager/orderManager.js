@@ -1,5 +1,6 @@
 const orderDAO = require('../DAO/orderDAO');
 const transDAO = require('../DAO/transactionDAO');
+const emailManager = require('../manager/emailManager');
 const customerDAO = require('../DAO/customerDAO');
 
 
@@ -151,6 +152,15 @@ async function getCancelledOrdersByRestaurant(restaurantId) {
     }
 }
 
+async function getOrderById(orderId) {
+    try {
+        const order = await orderDAO.getOrderById(orderId);
+        return order;
+    }catch(err){
+        return err;
+    }
+}
+
 async function getOrderByNumber(orderNo) {
     try {
         const order = await orderDAO.getOrderByNumber(orderNo);
@@ -201,9 +211,13 @@ async function setOrderAsInProgress(orderId) {
     }
 }
 
-async function setOrderAsCancelled(orderId) {
+async function setOrderAsCancelled(orderId, details) {
     try {
         const order = await orderDAO.setOrderAsCancelled(orderId); 
+        console.log(details);
+        await emailManager.sendEmail(orderId, details);
+        await transDAO.registerCounterTransaction(orderId);
+
         return 'Order Cancelled';
     } catch (err) {
         return err;
@@ -233,6 +247,7 @@ module.exports = {
     getDeliveredOrdersByRestaurant,
     getAllOrders,
     getAllOrdersByRestaurant,
+    getOrderById,
     getOrderByNumber,
     getOrderByNumberByRestaurant,
     getOrdersInProgress,

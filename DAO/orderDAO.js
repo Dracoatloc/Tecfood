@@ -84,6 +84,15 @@ async function getAllOrdersByRestaurant(orderRestaurantId) {
     return orders;
 }
 
+async function getOrderById(orderId) {
+    try {
+        const order = Order.findById(orderId);
+        return order;
+    } catch (err) {
+        return err;
+    }
+}
+
 async function getOrderByNumber(orderNo) {
     try {
         const order = await Order.find({ orderNumber : orderNo });
@@ -146,6 +155,7 @@ module.exports = {
     getDeliveredOrdersByRestaurant,
     getAllOrders,
     getAllOrdersByRestaurant,
+    getOrderById,
     getOrderByNumber,
     getOrderByNumberByRestaurant,
     getOrdersInProgress,
