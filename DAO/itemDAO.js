@@ -1,7 +1,7 @@
 const Item = require('../models/item'); 
 
-async function getItem(itemId) {
-    const item = await Item.findById(itemId);
+async function getItem(itemId, itemRestaurantId) {
+    const item = await Item.find( { _id: itemId, restaurantId: itemRestaurantId });
     return item;
 }
 
@@ -35,8 +35,8 @@ async function updateItemAvailability(itemId, availability) {
     return 'Availability Updated';
 }
 
-async function getItems() {
-    const items = await Item.find();
+async function getItems(itemRestaurantId) {
+    const items = await Item.find( { restaurantId: itemRestaurantId} );
     return items;
 }
 
