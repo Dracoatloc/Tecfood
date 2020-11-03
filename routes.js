@@ -3,6 +3,7 @@ router = require('express').Router();
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
+const employeeController = require('./controller/employeeController');
 
 router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
 
@@ -53,6 +54,15 @@ router.put('/restaurant/enable/:restaurantId', restaurantController.enableRestau
 router.put('/restaurant/disable/:restaurantId', restaurantController.disableRestaurant);
 
 router.post('/restaurant', restaurantController.addRestaurant);
+////
 
+router.get('/:restaurantId/main', employeeController.getMain);
+router.get('/:restaurantId/main/:employeeId', employeeController.getEmployee);
+
+router.put('/:restaurantId/main/:employeeId', employeeController.updateEmployee);
+router.put('/:restaurantId/main/enable/:employeeId', employeeController.enableEmployee);
+router.put('/:restaurantId/main/disable/:employeeId', employeeController.disableEmployee);
+
+router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
 
 module.exports = router;
