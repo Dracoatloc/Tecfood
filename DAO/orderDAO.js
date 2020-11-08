@@ -13,19 +13,8 @@ async function insertOrder(customerName, customerId, orderDescription, restauran
     await order.save();
 }
 
-async function getPendingOrders() {
-    const orders = await Order.find( { orderStatus: 'Pending'} );
-    console.log(orders);
-    return orders;
-}
-
 async function getPendingOrdersByRestaurant(orderRestaurantId) {
     const orders = await Order.find( { orderStatus: 'Pending', restaurantId: orderRestaurantId} );
-    return orders;
-}
-
-async function getMissedOrders() {
-    const orders = await Order.find( { orderStatus: 'Missed'} );
     return orders;
 }
 
@@ -34,18 +23,8 @@ async function getMissedOrdersByRestaurant(orderRestaurantId) {
     return orders;
 }
 
-async function getReadyOrders() {
-    const orders = await Order.find( { orderStatus: 'Ready'} );
-    return orders;
-}
-
 async function getReadyOrdersByRestaurant(orderRestaurantId) {
     const orders = await Order.find( { orderStatus: 'Ready', restaurantId: orderRestaurantId } );
-    return orders;
-}
-
-async function getDeliveredOrders() {
-    const orders = await Order.find( { orderStatus: 'Delivered'} );
     return orders;
 }
 
@@ -54,28 +33,13 @@ async function getDeliveredOrdersByRestaurant(orderRestaurantId) {
     return orders;
 }
 
-async function getOrdersInProgress() {
-    const orders = await Order.find( { orderStatus: 'In Progress'} );
-    return orders;
-}
-
 async function getOrdersInProgressByRestaurant(orderRestaurantId) {
     const orders = await Order.find( { orderStatus: 'In Progress', restaurantId: orderRestaurantId } );
     return orders;
 }
 
-async function getCancelledOrders() {
-    const orders = await Order.find( { orderStatus: 'Cancelled'} );
-    return orders;
-}
-
 async function getCancelledOrdersByRestaurant(orderRestaurantId) {
     const orders = await Order.find( { orderStatus: 'Cancelled', restaurantId: orderRestaurantId } );
-    return orders;
-}
-
-async function getAllOrders() {
-    const orders = await Order.find();
     return orders;
 }
 
@@ -89,15 +53,6 @@ async function getOrderById(orderId) {
         const order = Order.findById(orderId);
         return order;
     } catch (err) {
-        return err;
-    }
-}
-
-async function getOrderByNumber(orderNo) {
-    try {
-        const order = await Order.find({ orderNumber : orderNo });
-        return order;
-    } catch(err) {
         return err;
     }
 }
@@ -143,7 +98,6 @@ async function setOrderAsReady(orderId) {
     return order
 }
 
-
 async function setOrderAsCancelled(orderId) {
     await Order.findByIdAndUpdate(orderId, { orderStatus: 'Cancelled' });
     const order = await Order.findById(orderId);
@@ -152,22 +106,14 @@ async function setOrderAsCancelled(orderId) {
 
 module.exports = {
     insertOrder,
-    getPendingOrders,
     getPendingOrdersByRestaurant,
-    getMissedOrders,
     getMissedOrdersByRestaurant,
-    getReadyOrders,
     getReadyOrdersByRestaurant,
-    getDeliveredOrders,
     getDeliveredOrdersByRestaurant,
-    getAllOrders,
     getAllOrdersByRestaurant,
     getOrderById,
-    getOrderByNumber,
     getOrderByNumberByRestaurant,
-    getOrdersInProgress,
     getOrdersInProgressByRestaurant,
-    getCancelledOrders,
     getCancelledOrdersByRestaurant,
     setOrderAsDelivered,
     setOrderAsMissed,

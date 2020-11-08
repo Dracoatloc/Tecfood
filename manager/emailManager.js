@@ -14,15 +14,15 @@ async function sendEmail(orderId, message) {
       let transporter = nodemailer.createTransport({
           service: 'gmail',
         auth: {
-          user: 'aaamipichuladesoftware@gmail.com', // generated ethereal user
-          pass: 'mishuevos69', // generated ethereal password
+          user: 'tecfood1234@gmail.com', // No existe el correo, poner uno real 
+          pass: 'B4ck3ndP4ss', // Pass de un correo existente
         },
       });
 
       console.log(message);
 
       let info = await transporter.sendMail({
-        from: '"TecFood" <aaamipichuladesoftware@gmail.com>', // sender address
+        from: '"TecFood" <tecfood@gmail.com>', // sender address
         to: customerEmail, // list of receivers
         subject: "Order Cancellation & Details", // Subject line
         text: message,
