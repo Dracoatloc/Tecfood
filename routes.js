@@ -30,6 +30,7 @@ router.get('/orders/:restaurantId/:orderNo', orderController.getOrderByNumberByR
 
 router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
 router.put('/orders/missed/:orderId', orderController.setOrderAsMissed);
+router.put('orders/ready/:orderId', orderController.setOrderAsReady);
 router.put('/orders/start/:orderId', orderController.setOrderAsInProgress);
 router.put('/orders/cancel/:orderId', orderController.setOrderAsCancelled);
 

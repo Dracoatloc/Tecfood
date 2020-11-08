@@ -211,6 +211,16 @@ async function setOrderAsInProgress(orderId) {
     }
 }
 
+async function setOrderAsReady(orderId) {
+    try {
+        const order = await orderDAO.setOrderAsReady(orderId); 
+        return 'Order Now Ready';
+    } catch (err) {
+        return err;
+    }
+}
+
+
 async function setOrderAsCancelled(orderId, details) {
     try {
         const order = await orderDAO.setOrderAsCancelled(orderId); 
@@ -257,6 +267,7 @@ module.exports = {
     setOrderAsMissed,
     setOrderAsDelivered,
     setOrderAsInProgress,
+    setOrderAsReady,
     setOrderAsCancelled,
     registerTransaction
 }

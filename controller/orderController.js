@@ -97,6 +97,11 @@ async function setOrderAsDelivered(req,res) {
     res.send(await response);
 }
 
+async function setOrderAsReady(req,res) {
+    const response = await om.setOrderAsReady(req.params.orderId);
+    res.send(await response);
+}
+
 async function setOrderAsMissed(req,res) {
     const response = await om.setOrderAsMissed(req.params.orderId);
     res.send(await response);
@@ -139,6 +144,7 @@ module.exports = {
     getOrdersInProgressByRestaurant,
     getCancelledOrders,
     getCancelledOrdersByRestaurant,
+    setOrderAsReady,
     setOrderAsDelivered,
     setOrderAsMissed,
     setOrderAsInProgress,

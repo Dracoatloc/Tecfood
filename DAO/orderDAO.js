@@ -137,6 +137,13 @@ async function setOrderAsInProgress(orderId) {
     return order
 }
 
+async function setOrderAsReady(orderId) {
+    await Order.findByIdAndUpdate(orderId, { orderStatus: 'Ready' });
+    const order = await Order.findById(orderId);
+    return order
+}
+
+
 async function setOrderAsCancelled(orderId) {
     await Order.findByIdAndUpdate(orderId, { orderStatus: 'Cancelled' });
     const order = await Order.findById(orderId);
@@ -165,5 +172,6 @@ module.exports = {
     setOrderAsDelivered,
     setOrderAsMissed,
     setOrderAsInProgress,
+    setOrderAsReady,
     setOrderAsCancelled
 }
