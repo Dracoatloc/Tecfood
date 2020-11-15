@@ -3,7 +3,6 @@ const transDAO = require('../DAO/transactionDAO');
 const emailManager = require('../manager/emailManager');
 const customerDAO = require('../DAO/customerDAO');
 
-
 async function insertOrder(customerName, customerId, orderDescription, restaurantId, orderNumber) {
     try {
         await orderDAO.insertOrder(customerName, customerId, orderDescription, restaurantId, orderNumber);
@@ -19,9 +18,7 @@ async function getPendingOrdersByRestaurant(restaurantId) {
         return orders;
     }catch(err){
         return err;
-        
     }
-
 }
 
 async function getMissedOrdersByRestaurant(restaurantId) {
@@ -30,9 +27,7 @@ async function getMissedOrdersByRestaurant(restaurantId) {
         return orders;
     }catch(err){
         return err;
-        
     }
-
 }
 
 async function getReadyOrdersByRestaurant(restaurantId) {
@@ -41,7 +36,6 @@ async function getReadyOrdersByRestaurant(restaurantId) {
         return orders;
     }catch(err){
         return err;
-        
     }
 }
 
@@ -117,7 +111,6 @@ async function setOrderAsMissed(orderId) {
             return message;
         }
         return 'Order Missed';
-
     }catch(err) {
         return err;
     }
@@ -141,11 +134,9 @@ async function setOrderAsReady(orderId) {
     }
 }
 
-
 async function setOrderAsCancelled(orderId, details) {
     try {
         const order = await orderDAO.setOrderAsCancelled(orderId); 
-        console.log(details);
         await emailManager.sendEmail(orderId, details);
         await transDAO.registerCounterTransaction(orderId);
 
@@ -164,7 +155,6 @@ async function registerTransaction(orderId, customerId, restaurantId, amount) {
         return err;
     }
 }
-
 
 module.exports = { 
     insertOrder,

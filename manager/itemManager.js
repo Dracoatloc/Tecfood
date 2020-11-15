@@ -27,7 +27,6 @@ async function updateItem(itemId, itemBody) {
     } catch(err) {
         return err;
     }
-
 }
 
 async function updateItemAvailability(itemId, availability) {
@@ -46,7 +45,6 @@ async function getItems(restaurantId) {
     } catch(err){
         return err;
     }
-
 }
 
 module.exports = {
