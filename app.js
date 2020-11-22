@@ -31,11 +31,12 @@ const cors = require('cors'); //enable CORS
 app.use(bodyparser.json());
 app.use(bodyparser.text());
 app.use(cors());
+
 //Middlewares
+const CustomerLog = require("./controller/LogInController");
 app.use('/customer', CustomerRoute);
 
-
-
+app.use('/customer', CustomerLog);
 
 //Rutas
 app.use('/api', apiRoute);
