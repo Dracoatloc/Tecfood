@@ -11,14 +11,20 @@
 //https://www.youtube.com/watch?v=vjf774RKrLc
 
 var PORT = process.env.PORT || 3000; 
-
+//const passport = require('passport'); esta comentado para luego activarse en log in
 const express = require('express');
 const app = express();
+
 const mongoose = require('mongoose');
 const bodyparser =  require('body-parser');
 require('dotenv/config');
 
+//Inicia la verificacion
+//passport = require('./controller/passport');
 
+
+
+const CustomerRoute = require('./controller/SignupController');
 const apiRoute = require('./routes');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
@@ -26,6 +32,9 @@ app.use(bodyparser.json());
 app.use(bodyparser.text());
 app.use(cors());
 //Middlewares
+app.use('/customer', CustomerRoute);
+
+
 
 
 //Rutas
@@ -36,7 +45,7 @@ mongoose.connect(
     process.env.DB2, 
     { useNewUrlParser: true,
       useUnifiedTopology: true }, 
-    () => console.log('Esto demuestra que está conectada la base de datos con el programa.')
+    () => console.log('Esto demuestra que está conectada la base de datos con el programa en puerto: ' + PORT)
 );
 
 app.listen(PORT);
