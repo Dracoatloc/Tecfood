@@ -20,6 +20,14 @@ const employeeSchema = new mongoose.Schema({
     availability: {
         type: Boolean,
         required: true
+    },
+    email: {
+        type: String,
+        required: false
+    },
+    password: {
+        type: String,
+        required: false
     }
 },
 { collection: 'employee' }

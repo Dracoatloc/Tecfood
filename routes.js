@@ -1,6 +1,5 @@
 router = require('express').Router();
 const passport = require('passport');
-
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
@@ -9,25 +8,18 @@ const loginController = require('./controller/loginController');
 
 router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
 
-router.get('/orders/cancelled', orderController.getCancelledOrders);
 router.get('/orders/cancelled/:restaurantId', orderController.getCancelledOrdersByRestaurant);
 
-router.get('/orders', orderController.getAllOrders);
 router.get('/orders/:restaurantId', orderController.getAllOrdersByRestaurant);
 
-router.get('/orders/pending', orderController.getPendingOrders);
 router.get('/orders/pending/:restaurantId', orderController.getPendingOrdersByRestaurant);
 
-router.get('/orders/missed', orderController.getMissedOrders);
 router.get('/orders/missed/:restaurantId', orderController.getMissedOrdersByRestaurant);
 
-router.get('/orders/ready', orderController.getReadyOrders);
 router.get('/orders/ready/:restaurantId', orderController.getReadyOrdersByRestaurant);
 
-router.get('/orders/delivered', orderController.getDeliveredOrders);
 router.get('/orders/delivered/:restaurantId', orderController.getDeliveredOrdersByRestaurant);
 
-router.get('/orders/:orderNo', orderController.getOrderByNumber);
 router.get('/orders/:restaurantId/:orderNo', orderController.getOrderByNumberByRestaurant);
 
 router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
@@ -68,11 +60,16 @@ router.put('/:restaurantId/main/disable/:employeeId', employeeController.disable
 
 router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
 ////
+router.get('/:restaurantId/loginweb', function(req,res) {
+    res.json(req.params.restaurantId);
+});
 
-router.put('/:restaurantId/loginemail',passport.authenticate('local', {
+router.post('/login', loginController.authenticateLogin);
+router.post('/:restaurantId/loginweb', passport.authenticate('local', {
     successRedirect: '/:restaurantId/main',
-    failureRedirect: '/:restaurantId/loginemail'
-    }), loginController.authenticate)
+    failureRedirect: '/:restaurantId/loginweb',
+    failureFlash: 'Incorrect Username or Password'
+    }));
 
 
 module.exports = router;

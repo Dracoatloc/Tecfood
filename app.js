@@ -18,6 +18,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyparser =  require('body-parser');
 const passport = require('passport');
+const localStrat = require('passport-local').Strategy;
 require('dotenv/config');
 
 //Inicia la verificacion
@@ -33,13 +34,19 @@ app.use(bodyparser.json());
 app.use(bodyparser.text());
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(cors());
 
 //Middlewares
-const CustomerLog = require("./controller/LogInController");
-app.use('/customer', CustomerRoute);
+const CustomerLog = require("./controller/loginController");
+//app.use('/customer', CustomerRoute);
+//app.use('/customer', CustomerLog);
 
-app.use('/customer', CustomerLog);
+// Web authentication Log In
+const auth = require('./middleware/auth');
+passport.use(new localStrat({ 
+    usernameField: 'email'
+}, auth.authenticateWeb));
 
 //Rutas
 app.use('/api', apiRoute);
