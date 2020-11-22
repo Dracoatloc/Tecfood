@@ -1,5 +1,5 @@
 const { findByIdAndUpdate } = require('../models/customer');
-const Customer = require('../models/customer');
+import * as Customer from '../models/customer';
  
  async function blockUser(customerId) {
         await Customer.findByIdAndUpdate(customerId, {canOrder: false}, function() {
@@ -28,9 +28,9 @@ const Customer = require('../models/customer');
      const mensaje = "";
      const customer = await Customer.findByIdAndUpdate(customerId, {name:name, lastName:lastName, email:email, password:password});
      if(customer.name || customer.lastName){
-         mensaje = "Customer name/lastName updated.";
+         mensaje = "Customer name/lastName has been updated.";
      }if (customer.email){
-         mensaje = "Email has been updated.";
+         mensaje = "The email has been updated.";
      }if(customer.password){
          mensaje = "The password has been updated.";
      }
@@ -40,9 +40,9 @@ const Customer = require('../models/customer');
 
  async function updatePaymethod(customerId, payMethod){
      await findByIdAndUpdate(customerId, {$set: {
-         payMethod:payMethod
+         payMethod: payMethod
      }});
-     return 'New Paymethod has been saved';
+     return 'The payment method has been updated';
 
  }
 

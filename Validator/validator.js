@@ -1,8 +1,10 @@
-const custmoreDAO = require("../manager/customerManager");
+import * as customerM from '../models/customer';
+import * as customerDAO from '../DAO/customerDAO';
 const validator = require('validator');
 
-function validateCustomer(Customer){
-    const customer = custmoreDAO.getCustomer(Customer);
+async function validateCustomer(Customer){
+    const customer = customerDAO.getCustomer(Customer);
+    return customer;
 }
 
 async function validateEmail(email){
@@ -20,10 +22,16 @@ async function validateCreditCard(creditCard){
     const message = validator.isCreditCard(creditCard);
     return message;
 }
+//Checks if the email is not on the DB
+async function checkEmail(email){
+    const message = customerM.find({email:email});
+    return message;
+}
 
 module.exports = {
     validateCustomer,
     validateEmail,
     validatePasswordLength,
-    validateCreditCard
+    validateCreditCard,
+    checkEmail
 }
