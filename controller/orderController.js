@@ -1,33 +1,33 @@
 const mongoose = require('mongoose');
 const om = require('../manager/orderManager');
 
-async function getAllOrders(req,res) {
-    const response = om.getAllOrders();
+async function getAllOrdersByRestaurant(req,res) {
+    const response = await om.getAllOrdersByRestaurant(req.params.restaurantId);
     res.json(await response);
 }
 
-async function getPendingOrders(req,res) {
-    const response = om.getPendingOrders();
+async function getPendingOrdersByRestaurant(req,res) {
+    const response = await om.getPendingOrdersByRestaurant(req.params.restaurantId);
     res.json(await response);
 }
 
-async function getMissedOrders(req,res) {
-    const response = om.getMissedOrders();
+async function getMissedOrdersByRestaurant(req,res) {
+    const response = await om.getMissedOrdersByRestaurant(req.params.restaurantId);
     res.json(await response);
 }
 
-async function getReadyOrders(req,res) {
-    const response = om.getReadyOrders();
+async function getReadyOrdersByRestaurant(req,res) {
+    const response = await om.getReadyOrdersByRestaurant(req.params.restaurantId);
     res.json(await response);
 }
 
-async function getDeliveredOrders(req,res) {
-    const response = om.getDeliveredOrders();
+async function getDeliveredOrdersByRestaurant(req,res) {
+    const response = await om.getDeliveredOrdersByRestaurant(req.params.restaurantId);
     res.json(await response);
 }
 
-async function getOrderByNumber(req,res){
-    const response = await om.getOrderByNumber(req.params.orderNo);
+async function getOrderByNumberByRestaurant(req,res){
+    const response = await om.getOrderByNumberByRestaurant(req.params.orderNo, req.params.restaurantId);
     if (response.length == 0) {
         res.sendStatus(404);
     }
@@ -36,14 +36,41 @@ async function getOrderByNumber(req,res){
     }
 }
 
+async function getOrdersInProgressByRestaurant(req,res) {
+    const response = await om.getOrdersInProgressByRestaurant(req.params.restaurantId);
+    //const response = 'hola';
+    res.json(await response);
+}
+
+async function getCancelledOrdersByRestaurant(req,res) {
+    const response = await om.getCancelledOrdersByRestaurant(req.params.restaurantId);
+    res.json(await response);
+}
+
 async function setOrderAsDelivered(req,res) {
-    const response = om.setOrderAsDelivered(req.params.orderId);
+    const response = await om.setOrderAsDelivered(req.params.orderId);
+    res.send(await response);
+}
+
+async function setOrderAsReady(req,res) {
+    const response = await om.setOrderAsReady(req.params.orderId);
     res.send(await response);
 }
 
 async function setOrderAsMissed(req,res) {
-    const response = om.setOrderAsMissed(req.params.orderId);
+    const response = await om.setOrderAsMissed(req.params.orderId);
     res.send(await response);
+}
+
+async function setOrderAsInProgress(req,res) {
+    const response = await om.setOrderAsInProgress(req.params.orderId);
+    res.send(await response);
+}
+
+async function setOrderAsCancelled(req,res) {
+    const message = req.body;
+    const response = await om.setOrderAsCancelled(req.params.orderId, message);
+   res.send(await response);
 }
 
 async function insertOrder(req,res) {
@@ -56,13 +83,18 @@ async function insertOrder(req,res) {
 }
 
 module.exports = {
-    getAllOrders,
-    getPendingOrders,
-    getMissedOrders,
-    getReadyOrders,
-    getDeliveredOrders,
-    getOrderByNumber,
+    getAllOrdersByRestaurant,
+    getPendingOrdersByRestaurant,
+    getMissedOrdersByRestaurant,
+    getReadyOrdersByRestaurant,
+    getDeliveredOrdersByRestaurant,
+    getOrderByNumberByRestaurant,
+    getOrdersInProgressByRestaurant,
+    getCancelledOrdersByRestaurant,
+    setOrderAsReady,
     setOrderAsDelivered,
     setOrderAsMissed,
+    setOrderAsInProgress,
+    setOrderAsCancelled,
     insertOrder
 };

@@ -38,12 +38,19 @@ async function addCustomer(name, lastName, email, password){
     return 'You have created an account';
 }
 
+ async function getEmail(customerId) {
+        const customer = await Customer.findById(customerId);
+        const email = customer.email;
+
+        return email;
+ }
 
 model.exports ={
     getCustomerEmail,
     getCustomerPassword,
     getCustomerId,
     addCustomer,
-    blockUser
+    blockUser,
+    getEmail
+
 }
- 

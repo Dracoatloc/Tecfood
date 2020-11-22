@@ -2,9 +2,9 @@ const express = require('express');
 const Item = require('../models/item'); 
 const itemDAO = require('../DAO/itemDAO');
 
-async function getItem(itemId) {
+async function getItem(itemId, restaurantId) {
     try {
-        const item = await itemDAO.getItem(itemId);
+        const item = await itemDAO.getItem(itemId, restaurantId);
         return item;
     } catch (err) {
         return err;
@@ -27,7 +27,6 @@ async function updateItem(itemId, itemBody) {
     } catch(err) {
         return err;
     }
-
 }
 
 async function updateItemAvailability(itemId, availability) {
@@ -39,14 +38,13 @@ async function updateItemAvailability(itemId, availability) {
     }
 }
 
-async function getItems() {
+async function getItems(restaurantId) {
     try {
-        const items = await itemDAO.getItems();
+        const items = await itemDAO.getItems(restaurantId);
         return items;
     } catch(err){
         return err;
     }
-
 }
 
 module.exports = {

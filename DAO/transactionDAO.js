@@ -11,6 +11,23 @@ async function registerTransaction(orderId, customerId, restaurantId, amount) {
     return 'Transaction saved';
 }
 
+async function registerCounterTransaction(orderId) {
+    const Order = require('../models/order');
+    const order = await Order.findById(orderId);
+    const customerID = order.customerId;
+
+    const trans = new Trans({
+        orderId: orderId,
+        customerId: customerID,
+        restaurantId: order.restaurantId,
+        amount: (-1 * order.amount)
+    });
+
+    await trans.save();
+    return 'Transaction saved';
+}
+
 module.exports = {
-    registerTransaction
+    registerTransaction,
+    registerCounterTransaction
 }
