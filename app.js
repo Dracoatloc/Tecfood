@@ -29,6 +29,7 @@ const apiRoute = require('./routes');
 const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
+app.use(bodyparser.text());
 app.use(cors());
 //Middlewares
 app.use('/customer', CustomerRoute);

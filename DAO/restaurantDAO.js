@@ -44,10 +44,17 @@ async function addRestaurant(name, rfc, location, restManagerName, restManagerEm
     return 'Restaurant Saved';
 }
 
+async function getSchedule(restaurantId) {
+    const restaurant = await Restaurant.findById(restaurantId);
+    const schedule = await restaurant.schedule;
+    return schedule;
+}
+
 module.exports = {
     getRestaurants,
     getRestaurant,
     updateRestaurant,
     updateRestaurantAvailability,
-    addRestaurant
+    addRestaurant,
+    getSchedule
 }

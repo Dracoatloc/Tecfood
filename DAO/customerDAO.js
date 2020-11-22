@@ -7,3 +7,15 @@ const Customer = require('../models/customer');
         return 'User Blocked';
  }
 
+ async function getEmail(customerId) {
+        const customer = await Customer.findById(customerId);
+        const email = customer.email;
+
+        return email;
+ }
+
+module.exports = {
+    blockUser,
+    getEmail
+}
+
