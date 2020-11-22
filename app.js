@@ -17,6 +17,7 @@ const app = express();
 
 const mongoose = require('mongoose');
 const bodyparser =  require('body-parser');
+const passport = require('passport');
 require('dotenv/config');
 
 //Inicia la verificacion
@@ -30,6 +31,8 @@ const cors = require('cors'); //enable CORS
 // Parsing post requests
 app.use(bodyparser.json());
 app.use(bodyparser.text());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 
 //Middlewares

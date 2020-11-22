@@ -1,9 +1,11 @@
 router = require('express').Router();
+const passport = require('passport');
 
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
 const employeeController = require('./controller/employeeController');
+const loginController = require('./controller/loginController');
 
 router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
 
@@ -65,5 +67,12 @@ router.put('/:restaurantId/main/enable/:employeeId', employeeController.enableEm
 router.put('/:restaurantId/main/disable/:employeeId', employeeController.disableEmployee);
 
 router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
+////
+
+router.put('/:restaurantId/loginemail',passport.authenticate('local', {
+    successRedirect: '/:restaurantId/main',
+    failureRedirect: '/:restaurantId/loginemail'
+    }), loginController.authenticate)
+
 
 module.exports = router;
