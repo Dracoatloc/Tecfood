@@ -67,8 +67,7 @@ router.get('/:restaurantId/loginweb', function(req,res) {
 router.post('/login', loginController.authenticateLogin);
 router.post('/:restaurantId/loginweb', passport.authenticate('local', {
     successRedirect: '/:restaurantId/main',
-    failureRedirect: '/:restaurantId/loginweb',
-    failureFlash: 'Incorrect Username or Password'
+    failureRedirect: '/:restaurantId/loginweb'
     }));
 
 

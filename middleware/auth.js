@@ -1,26 +1,39 @@
 const passport = require('passport');
-const localStrat = require('passport-local').Strategy; 
 const Employee = require('../models/employee');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
-async function authenticateWeb(username, password, done) {
-    const employee_pass = await Employee.find( { email: username }, function(err, employee) {
+async function authenticateWeb(email, password, done) {
+    const employee = await Employee.find( { email: email }, function(err, employee) {
         if (err) {
             return done(err);
         }
         if (!employee) {
             return done(null, false, { message: 'Incorrect Username or Password' });
         }
-        return employee.password;
     });
-
+    const employee_pass = await employee[0].password;
     console.log(employee_pass);
-    const match = await bcrypt.compare(password, employee_pass);
-    if (match) {
-        return done(null, true, { user: employee });
-    }
-    return done(null, false, { message: 'Incorrect Username or Password' });
+
+    await bcrypt.compare(password, employee_pass, (err, result) => {
+        if (err) {
+            return done(err, false, {message: 'Incorrect Username or Password'});
+        }
+        if (result) {
+            const token = jwt.sign({
+                email: employee[0].email,
+                employeeId: employee[0]._id
+            }, process.env.JWT_KEY,{
+                expiresIn: "1h"
+            });
+            return done(null, true, {
+                message: 'Authentication passed',
+                token: token
+            });
+        }
+        return done(null, false, { message: 'Authentication failed'});
+    });
 }
 
 module.exports = {

@@ -22,20 +22,18 @@ const localStrat = require('passport-local').Strategy;
 require('dotenv/config');
 
 //Inicia la verificacion
-//passport = require('./controller/passport');
-
-
+const cors = require('cors'); //enable CORS
+app.use(cors());
 
 const CustomerRoute = require('./controller/SignupController');
 const apiRoute = require('./routes');
-const cors = require('cors'); //enable CORS
+
 // Parsing post requests
 app.use(bodyparser.json());
 app.use(bodyparser.text());
+// Authentication de passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(cors());
 
 //Middlewares
 const CustomerLog = require("./controller/loginController");
@@ -47,6 +45,12 @@ const auth = require('./middleware/auth');
 passport.use(new localStrat({ 
     usernameField: 'email'
 }, auth.authenticateWeb));
+passport.serializeUser(function(user,done) {
+    done(null,user);
+});
+passport.deserializeUser(function(user,done) {
+    done(null,user);
+});
 
 //Rutas
 app.use('/api', apiRoute);
