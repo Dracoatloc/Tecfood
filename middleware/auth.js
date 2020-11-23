@@ -14,7 +14,6 @@ async function authenticateWeb(email, password, done) {
         }
     });
     const employee_pass = await employee[0].password;
-    console.log(employee_pass);
 
     await bcrypt.compare(password, employee_pass, (err, result) => {
         if (err) {

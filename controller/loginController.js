@@ -1,7 +1,7 @@
 //Here we import all we need in order to function our bussiness logic
 const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const passport = require('passport')
 const loginManager = require('../manager/loginManager');
 
 //Bring in the Customer model
@@ -53,14 +53,26 @@ async function authenticateLogin(req,res){
     }
 }
 
-async function authenticateWebLogin(req, res, ) {
-    const authentic_email  = await loginManager.getEmail(req.body.email);
-    const authentic_pass = await loginManager.getPassword(req.body.email, req.body.password);
-
-    if (authentic_email && authentic_pass) {
-             
-    }
-    res.send(await response);
+async function authenticateWebLogin(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+            console.log(user);
+            if (err) {
+                next(err);
+                return;
+            }
+            if (!user){
+                res.redirect('/api/' + req.params.restaurantId + '/loginweb');
+                return 
+            }
+            req.logIn(user, async function(err) {
+                if (err) {
+                    next(err);
+                    return;
+                }
+                res.redirect('/api/' + req.params.restaurantId + '/main');
+                return;
+            });
+        })(req,res,next);
 }
 
 // Estoy cambiando un poco para que siga las rutas que nos dijo el profe, a traves del routes.js
@@ -116,5 +128,6 @@ router.post("/login", (req, res, next) => {
 });
 
 module.exports = {
-    authenticateLogin
+    authenticateLogin,
+    authenticateWebLogin
 }
