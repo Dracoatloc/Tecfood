@@ -18,7 +18,6 @@ async function getPendingOrders() {
         return orders;
     }catch(err){
         return err;
-        
     }
 
 }
