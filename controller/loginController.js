@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport')
 const loginManager = require('../manager/loginManager');
+const Employee = require('../models/employee');
 
 //Bring in the Customer model
 let Customer = require("../models/customer");
-let customerDAO = require("../DAO/customerDAO"); 
 
 async function authenticateLogin(req,res){
     const customer = await Customer.find({email: req.body.email });
@@ -53,15 +53,12 @@ async function authenticateLogin(req,res){
     }
 }
 
-async function authenticateWebLogin(req, res, next) {
+// lo dejo por si acaso xd
+async function authenticateWebLoginxdxd(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
             if (err) {
                 next(err);
                 return;
-            }
-            if (!user){
-                res.redirect('/api/' + req.params.restaurantId + '/loginweb');
-                return 
             }
             req.logIn(user, async function(err) {
                 if (err) {
@@ -72,6 +69,20 @@ async function authenticateWebLogin(req, res, next) {
                 return;
             });
         })(req,res,next);
+}
+
+async function authenticateWebLogin(req,res) {
+    const email = req.body.email
+    if(req.user != null || req.user != false) { 
+        const token = jwt.sign({
+            employee_email: email,
+        }, process.env.JWT_KEY,{
+            expiresIn: "1h"
+        });
+        res.cookie('token', token, { httpOnly: true} );
+    }
+    const employee = await loginManager.getEmployee(email);
+    res.json(employee);
 }
 
 // Estoy cambiando un poco para que siga las rutas que nos dijo el profe, a traves del routes.js

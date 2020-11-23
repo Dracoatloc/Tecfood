@@ -60,12 +60,9 @@ router.put('/:restaurantId/main/disable/:employeeId', employeeController.disable
 
 router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
 ////
-router.get('/:restaurantId/loginweb', function(req,res) {
-    res.json(req.params.restaurantId);
-});
 
 router.post('/login', loginController.authenticateLogin);
-router.post('/:restaurantId/loginweb', loginController.authenticateWebLogin);
+router.post('/:restaurantId/loginweb', passport.authenticate('local'), loginController.authenticateWebLogin);
 
 
 module.exports = router;

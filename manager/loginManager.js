@@ -1,13 +1,9 @@
-const auth = require('passport')
+const employeeDAO = require('../DAO/employeeDAO');
 
-async function getEmail(email) {
-
+async function getEmployee(email) {
+    const employee = await employeeDAO.getEmployeeByEmail(email);
+    return employee;
 }
-
-async function getPassword(pass) {
-}
-
 module.exports = {
-    getEmail,
-    getPassword
+    getEmployee
 }

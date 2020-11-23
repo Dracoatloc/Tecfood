@@ -31,7 +31,7 @@ async function authenticateWeb(email, password, done) {
                 token: token
             });
         }
-        return done(null, false, { message: 'Authentication failed'});
+        return done(null, false, { message: 'Incorrect Username or Password'});
     });
 }
 

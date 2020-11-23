@@ -5,6 +5,11 @@ async function getEmployee(employeeId) {
     return employee;
 }
 
+async function getEmployeeByEmail(email) {
+    const employee = await Employee.find( { email: email} );
+    return employee;
+}
+
 async function getEmployees(employeeRestaurantId) {
     const employees = await Employee.find( { restaurantId: employeeRestaurantId } );
     return employees;
@@ -43,6 +48,7 @@ async function addEmployee(newEmployee) {
 
 module.exports = {
     getEmployee,
+    getEmployeeByEmail,
     getEmployees,
     updateEmployee,
     updateEmployeeAvailability,
