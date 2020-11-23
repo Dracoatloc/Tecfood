@@ -62,7 +62,7 @@ router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
 ////
 
 router.post('/login', loginController.authenticateLogin);
-router.post('/:restaurantId/loginweb', passport.authenticate('local'), loginController.authenticateWebLogin);
+router.post('/loginweb', passport.authenticate('local'), loginController.authenticateWebLogin);
 
 
 module.exports = router;
