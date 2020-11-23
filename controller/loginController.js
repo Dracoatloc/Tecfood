@@ -55,7 +55,6 @@ async function authenticateLogin(req,res){
 
 async function authenticateWebLogin(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
-            console.log(user);
             if (err) {
                 next(err);
                 return;
