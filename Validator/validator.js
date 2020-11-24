@@ -1,6 +1,6 @@
-import * as customerM from '../models/customer';
-import * as customerDAO from '../DAO/customerDAO';
 const validator = require('validator');
+const customerM = require('../models/customer');
+const customerDAO = require('../DAO/customerDAO');
 
 async function validateCustomer(Customer){
     const customer = customerDAO.getCustomer(Customer);

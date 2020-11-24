@@ -1,5 +1,5 @@
-import * as validator from "../validator/validator";
-import * as mcustomer from "../manager/customerManager";
+const validator = require('../Validator/validator');
+const mcustomer = require('../manager/customerManager');
 
 async function getAuthentication(req, res){
    if (req.isAuthenticated()) {

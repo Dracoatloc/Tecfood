@@ -82,7 +82,6 @@ async function authenticateWebLogin(req,res) {
         res.cookie('token', token, { httpOnly: true} );
     }
     const employee = await loginManager.getEmployee(email);
-    console.log(employee);
     res.json(employee);
 }
 

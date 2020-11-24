@@ -1,5 +1,4 @@
 const { findByIdAndUpdate } = require('../models/customer');
-import * as Customer from '../models/customer';
 const { model } = require('../models/customer');
 
  async function blockUser(customerId) {

@@ -3,16 +3,10 @@ const passport = require('passport');
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
-const setttingsController = require('./controller/settingsController');
 const settingsController = require('./controller/settingsController');
 
 //All getters for order
-router.get('/orders', orderController.getAllOrders);
-router.get('/orders/pending', orderController.getPendingOrders);
-router.get('/orders/missed', orderController.getMissedOrders);
-router.get('/orders/ready', orderController.getReadyOrders);
-router.get('/orders/delivered', orderController.getDeliveredOrders);
-router.get('/orders/:orderNo', orderController.getOrderByNumber);
+
 
 
 ///All puts for order
@@ -82,7 +76,7 @@ router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
 router.post('/login', loginController.authenticateLogin);
 router.post('/loginweb', passport.authenticate('local'), loginController.authenticateWebLogin);
 
-router.get('/authUser/:customer.id', setttingsController.getAuthentication);
+router.get('/authUser/:customer.id', settingsController.getAuthentication);
 
 router.post('/user/updateName/:customerid', settingsController.ChangesOnName);
 router.post('/user/updateEmail/:customerid', settingsController.changesOnEmail);
