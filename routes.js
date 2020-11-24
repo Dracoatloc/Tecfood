@@ -1,5 +1,5 @@
-const router = require('express').Router();
-
+router = require('express').Router();
+const passport = require('passport');
 const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
@@ -18,6 +18,30 @@ router.get('/orders/:orderNo', orderController.getOrderByNumber);
 ///All puts for order
 router.put('/orders/deliver/:orderNo', orderController.setOrderAsDelivered);
 router.put('/orders/missed/:orderNo', orderController.setOrderAsMissed);
+const employeeController = require('./controller/employeeController');
+const loginController = require('./controller/loginController');
+
+router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
+
+router.get('/orders/cancelled/:restaurantId', orderController.getCancelledOrdersByRestaurant);
+
+router.get('/orders/:restaurantId', orderController.getAllOrdersByRestaurant);
+
+router.get('/orders/pending/:restaurantId', orderController.getPendingOrdersByRestaurant);
+
+router.get('/orders/missed/:restaurantId', orderController.getMissedOrdersByRestaurant);
+
+router.get('/orders/ready/:restaurantId', orderController.getReadyOrdersByRestaurant);
+
+router.get('/orders/delivered/:restaurantId', orderController.getDeliveredOrdersByRestaurant);
+
+router.get('/orders/:restaurantId/:orderNo', orderController.getOrderByNumberByRestaurant);
+
+router.put('/orders/deliver/:orderId', orderController.setOrderAsDelivered);
+router.put('/orders/missed/:orderId', orderController.setOrderAsMissed);
+router.put('/orders/ready/:orderId', orderController.setOrderAsReady);
+router.put('/orders/start/:orderId', orderController.setOrderAsInProgress);
+router.put('/orders/cancel/:orderId', orderController.setOrderAsCancelled);
 
 //All post for order 
 router.post('/orders', orderController.insertOrder);
@@ -43,6 +67,20 @@ router.put('/restaurant/enable/:restaurantId', restaurantController.enableRestau
 router.put('/restaurant/disable/:restaurantId', restaurantController.disableRestaurant);
 
 router.post('/restaurant', restaurantController.addRestaurant);
+////
+
+router.get('/:restaurantId/main', employeeController.getMain);
+router.get('/:restaurantId/main/:employeeId', employeeController.getEmployee);
+
+router.put('/:restaurantId/main/:employeeId', employeeController.updateEmployee);
+router.put('/:restaurantId/main/enable/:employeeId', employeeController.enableEmployee);
+router.put('/:restaurantId/main/disable/:employeeId', employeeController.disableEmployee);
+
+router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
+////
+
+router.post('/login', loginController.authenticateLogin);
+router.post('/loginweb', passport.authenticate('local'), loginController.authenticateWebLogin);
 
 router.get('/authUser/:customer.id', setttingsController.getAuthentication);
 

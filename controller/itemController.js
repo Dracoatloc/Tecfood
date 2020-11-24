@@ -1,12 +1,12 @@
 const im = require('../manager/itemManager');
 
 async function getItem(req,res) {
-    const response = await im.getItem(req.params.itemId);
+    const response = await im.getItem(req.params.itemId, req.params.restaurantId);
     res.json(await response);
 }
 
 async function getItems(req,res){
-    const response = await im.getItems();
+    const response = await im.getItems(req.params.restaurantId);
     res.json(await response);
 }
 
@@ -26,7 +26,7 @@ async function enableItem(req,res) {
 }
 
 async function addItem(req,res) {
-    const response = await im.addItem(req.body.name, req.body.description, req.body.price, req.body.image, req.body.availability, req.body.includedSides, req.body.restaurantId);
+    const response = await im.addItem(req.body.name, req.body.description, req.body.price, req.body.image, req.body.availability, req.body.includedSides, req.params.restaurantId);
     res.send(await response);
 }
 

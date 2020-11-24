@@ -1,7 +1,7 @@
 const orderDAO = require('../DAO/orderDAO');
 const transDAO = require('../DAO/transactionDAO');
+const emailManager = require('../manager/emailManager');
 const customerDAO = require('../DAO/customerDAO');
-
 
 async function insertOrder(customerName, customerId, orderDescription, restaurantId, orderNumber) {
     try {
@@ -12,40 +12,36 @@ async function insertOrder(customerName, customerId, orderDescription, restauran
     }
 }
 
-async function getPendingOrders() {
+async function getPendingOrdersByRestaurant(restaurantId) {
     try{ 
-        const orders = await orderDAO.getPendingOrders();
+        const orders = await orderDAO.getPendingOrdersByRestaurant(restaurantId);
         return orders;
     }catch(err){
         return err;
     }
-
 }
 
-async function getMissedOrders() {
+async function getMissedOrdersByRestaurant(restaurantId) {
     try{ 
-        const orders = await orderDAO.getMissedOrders();
+        const orders = await orderDAO.getMissedOrdersByRestaurant(restaurantId);
         return orders;
     }catch(err){
         return err;
-        
     }
-
 }
 
-async function getReadyOrders() {
+async function getReadyOrdersByRestaurant(restaurantId) {
     try{ 
-        const orders = await orderDAO.getReadyOrders();
+        const orders = await orderDAO.getReadyOrdersByRestaurant(restaurantId);
         return orders;
     }catch(err){
         return err;
-        
     }
 }
 
-async function getDeliveredOrders() {
+async function getDeliveredOrdersByRestaurant(restaurantId) {
     try{ 
-        const orders = await orderDAO.getDeliveredOrders();
+        const orders = await orderDAO.getDeliveredOrdersByRestaurant(restaurantId);
         return orders;
     }catch(err){
         return err;
@@ -53,18 +49,45 @@ async function getDeliveredOrders() {
     }
 }
 
-async function getAllOrders() {
+async function getAllOrdersByRestaurant(restaurantId) {
     try {
-        const orders = await orderDAO.getAllOrders();
+        const orders = await orderDAO.getAllOrdersByRestaurant(restaurantId);
         return orders;
     } catch(err) {
         return err;
     }
 }
 
-async function getOrderByNumber(orderNo) {
+async function getOrdersInProgressByRestaurant(restaurantId) {
     try {
-        const order = await orderDAO.getOrderByNumber(orderNo);
+        const orders = await orderDAO.getOrdersInProgressByRestaurant(restaurantId);
+        return orders;
+    } catch(err) {
+        return err;
+    }
+}
+
+async function getCancelledOrdersByRestaurant(restaurantId) {
+    try {
+        const orders = await orderDAO.getCancelledOrdersByRestaurant(restaurantId);
+        return orders;
+    } catch(err) {
+        return err;
+    }
+}
+
+async function getOrderById(orderId) {
+    try {
+        const order = await orderDAO.getOrderById(orderId);
+        return order;
+    }catch(err){
+        return err;
+    }
+}
+
+async function getOrderByNumberByRestaurant(orderNo, restaurantId) {
+    try {
+        const order = await orderDAO.getOrderByNumber(orderNo, restaurantId);
         return order;
     }catch(err){
         return err;
@@ -88,18 +111,38 @@ async function setOrderAsMissed(orderId) {
             return message;
         }
         return 'Order Missed';
-
     }catch(err) {
         return err;
     }
 }
 
-async function setCashOnDeliveryMissed(orderId) {
+async function setOrderAsInProgress(orderId) {
     try {
-        const message = await orderDAO.setCashOnDeliveryMissed(orderId);
-        return message;
-    } catch(err) {
-        console.log(err);
+        const order = await orderDAO.setOrderAsInProgress(orderId); 
+        return 'Order Now in Progress';
+    } catch (err) {
+        return err;
+    }
+}
+
+async function setOrderAsReady(orderId) {
+    try {
+        const order = await orderDAO.setOrderAsReady(orderId); 
+        return 'Order Now Ready';
+    } catch (err) {
+        return err;
+    }
+}
+
+async function setOrderAsCancelled(orderId, details) {
+    try {
+        const order = await orderDAO.setOrderAsCancelled(orderId); 
+        await emailManager.sendEmail(orderId, details);
+        await transDAO.registerCounterTransaction(orderId);
+
+        return 'Order Cancelled';
+    } catch (err) {
+        return err;
     }
 }
 
@@ -113,16 +156,21 @@ async function registerTransaction(orderId, customerId, restaurantId, amount) {
     }
 }
 
-
 module.exports = { 
-    setOrderAsDelivered,
     insertOrder,
-    getPendingOrders,
-    getMissedOrders,
-    getReadyOrders,
-    getDeliveredOrders,
-    getAllOrders,
-    getOrderByNumber,
+    getPendingOrdersByRestaurant,
+    getMissedOrdersByRestaurant,
+    getReadyOrdersByRestaurant,
+    getDeliveredOrdersByRestaurant,
+    getAllOrdersByRestaurant,
+    getOrderById,
+    getOrderByNumberByRestaurant,
+    getOrdersInProgressByRestaurant,
+    getCancelledOrdersByRestaurant,
     setOrderAsMissed,
+    setOrderAsDelivered,
+    setOrderAsInProgress,
+    setOrderAsReady,
+    setOrderAsCancelled,
     registerTransaction
 }
