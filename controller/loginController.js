@@ -73,7 +73,7 @@ async function authenticateWebLoginxdxd(req, res, next) {
 
 async function authenticateWebLogin(req,res) {
     const email = req.body.email
-    if(req.user != null || req.user != false) { 
+    if(req.user) { 
         const token = jwt.sign({
             employee_email: email,
         }, process.env.JWT_KEY,{
@@ -82,6 +82,7 @@ async function authenticateWebLogin(req,res) {
         res.cookie('token', token, { httpOnly: true} );
     }
     const employee = await loginManager.getEmployee(email);
+    console.log(employee);
     res.json(employee);
 }
 
