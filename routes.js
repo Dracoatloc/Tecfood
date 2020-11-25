@@ -4,17 +4,14 @@ const orderController = require('./controller/orderController');
 const itemController = require('./controller/itemController');
 const restaurantController = require('./controller/restaurantController');
 const settingsController = require('./controller/settingsController');
+const employeeController = require('./controller/employeeController');
+const loginController = require('./controller/loginController');
 
 //All getters for order
 
 
 
 ///All puts for order
-router.put('/orders/deliver/:orderNo', orderController.setOrderAsDelivered);
-router.put('/orders/missed/:orderNo', orderController.setOrderAsMissed);
-const employeeController = require('./controller/employeeController');
-const loginController = require('./controller/loginController');
-
 router.get('/orders/inprogress/:restaurantId', orderController.getOrdersInProgressByRestaurant);
 
 router.get('/orders/cancelled/:restaurantId', orderController.getCancelledOrdersByRestaurant);
