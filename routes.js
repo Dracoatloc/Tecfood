@@ -73,7 +73,7 @@ router.post('/:restaurantId/main/addemployee', employeeController.addEmployee);
 router.post('/login', loginController.authenticateLogin);
 router.post('/loginweb', passport.authenticate('local'), loginController.authenticateWebLogin);
 
-router.get('/authUser/:customer.id', settingsController.getAuthentication);
+router.get('/authUser/', settingsController.getAuthentication);
 
 router.post('/user/updateName/:customerid', settingsController.ChangesOnName);
 router.post('/user/updateEmail/:customerid', settingsController.changesOnEmail);
