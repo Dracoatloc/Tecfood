@@ -38,7 +38,6 @@ async function getOrderByNumberByRestaurant(req,res){
 
 async function getOrdersInProgressByRestaurant(req,res) {
     const response = await om.getOrdersInProgressByRestaurant(req.params.restaurantId);
-    //const response = 'hola';
     res.json(await response);
 }
 

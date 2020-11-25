@@ -87,7 +87,7 @@ async function getOrderById(orderId) {
 
 async function getOrderByNumberByRestaurant(orderNo, restaurantId) {
     try {
-        const order = await orderDAO.getOrderByNumber(orderNo, restaurantId);
+        const order = await orderDAO.getOrderByNumberByRestaurant(orderNo, restaurantId);
         return order;
     }catch(err){
         return err;
