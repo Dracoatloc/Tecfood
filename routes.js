@@ -6,8 +6,18 @@ const restaurantController = require('./controller/restaurantController');
 const settingsController = require('./controller/settingsController');
 const employeeController = require('./controller/employeeController');
 const loginController = require('./controller/loginController');
+const promotionController = require('./controller/promotionController');
 
 //All getters for order
+
+router.get('/:restaurantId/main/promotions', promotionController.getPromotions);
+router.get('/:restaurantId/main/promotions/:promotionId', promotionController.getPromotion);
+
+router.post('/:restaurantId/main/promotions/addpromotion', promotionController.addPromotion);
+
+router.put('/:restaurantId/main/promotions/:promotionId', promotionController.updatePromotion);
+
+router.delete('/:restaurantId/main/promotions/delete/:promotionId', promotionController.deletePromotion);
 
 
 
@@ -78,7 +88,6 @@ router.get('/authUser', settingsController.getAuthentication);
 router.post('/user/updateName/:customerid', settingsController.ChangesOnName);
 router.post('/user/updateEmail/:customerid', settingsController.changesOnEmail);
 router.post('/user/updatePaymethod/:customerid', settingsController.changePaymethod);
-
-
+////
 
 module.exports = router;
