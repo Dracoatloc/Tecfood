@@ -7,7 +7,7 @@ const settingsController = require('./controller/settingsController');
 const employeeController = require('./controller/employeeController');
 const loginController = require('./controller/loginController');
 const promotionController = require('./controller/promotionController');
-
+const notificationsController = require('./controller/notificationsController');
 //All getters for order
 
 router.get('/:restaurantId/main/promotions', promotionController.getPromotions);
@@ -19,6 +19,14 @@ router.put('/:restaurantId/main/promotions/:promotionId', promotionController.up
 
 router.delete('/:restaurantId/main/promotions/delete/:promotionId', promotionController.deletePromotion);
 
+////
+router.get('/:restaurantId/main/notifications', notificationsController.getNotifications);
+
+router.post('/:restaurantId/main/notifications', notificationsController.addNotification);
+
+router.delete('/:restaurantId/main/notifications/:notificationId', notificationsController.deleteNotification);
+
+router.put('/:restaurantId/main/notifications/:notificationId', notificationsController.editNotification);
 
 
 ///All puts for order
